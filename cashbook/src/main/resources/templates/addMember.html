@@ -31,7 +31,6 @@ let helperInit = function(){
 
 $(document).ready(function() { 
 	$('#btn').click(function() {
-
 		if($('#memberId').val().length < 4){	
 			helperInit();
 			$('#idHelper').text("id 4자이상");
@@ -55,8 +54,11 @@ $(document).ready(function() {
 		}else if($('#memberPhone').val().length === 0){ 
 			helperInit();
 			$('#phoneHelper').text("전화번호 입력하세요");
-			$('#memberPhone').focus();
-			
+			$('#memberPhone').focus();			
+		}else if($('#memberEmail').val().length === 0){ 
+			helperInit();
+			$('#emailHelper').text("이메일을  입력하세요");
+			$('#memberEmail').focus();			
 		} else{
 			$('#myform').submit();
 		} 	
@@ -67,7 +69,7 @@ $(document).ready(function() {
 </head>
 <body>
 <div class="container">
-	<h1>회원가입 </h1>
+	<h1>회원가입 </h1>		<!-- action="/addMember" => 해당 내용들은 /addMember 로 넘김 -->
 	<form method="post" action="/addMember" id="myform">
 		<div> <!--  id="" 는 css,자바스크랩 / name은 액션 --> 
 			아이디 : <input type="text" name="memberId" id="memberId">
@@ -92,11 +94,11 @@ $(document).ready(function() {
 			전화번호 : <input type="text" name="memberPhone" id="memberPhone">
 			<span id="phoneHelper"></span>
 		</div>
-		<!-- <div>
+		<div>
 			이메일 : <input type="text" name="memberEmail" id="memberEmail" >
 			<span id="emailHelper"></span>
 		</div>
-		-->
+
 		<div>
 			<button type="button" id="btn"> 회원가입 </button>
 		</div>
