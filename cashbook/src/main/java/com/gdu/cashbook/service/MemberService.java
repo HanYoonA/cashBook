@@ -19,11 +19,17 @@ public class MemberService {
 	@Autowired //주입  new생성자 연산자 대신해서 객체만듬 
 	private MemberMapper memberMapper;
 	
+	//회원가입 아이디 중복 체크 
+	public String checkMemberId(String memberIdcheck) {
+		return memberMapper.selectMemberId(memberIdcheck);
+	}
 	
+	//로그인
 	public LoginMember login(LoginMember loginMember) {
 		return memberMapper.selectLoginMember(loginMember);
 	}
 	
+	//회원가입
 	public int addMember(Member member) {
 		return memberMapper.insertMember(member);			
 	}

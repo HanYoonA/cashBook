@@ -3,7 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
-
+	<!--  아이디 중복 체크 값이 있으면  아이디 사용못하고 값이 없으면 아이디 사용할 수 있음 -->
+	<select id="selectMemberId"  
+			parameterType="String"
+			resultType="String">
+		SELECT 
+			member_id <!-- 아디값 있으면  못씀 -->
+		FROM member
+		WHERE member_id = #{memberIdCheck}		
+	</select>
+	
+	
 	<select id="selectLoginMember" 
 			parameterType="com.gdu.cashbook.vo.LoginMember" 
 			resultType="com.gdu.cashbook.vo.LoginMember"> 
@@ -15,6 +25,7 @@
 		AND member_pw=#{memberPw} 	
 	</select>
 
+	<!-- 회원가입, 정보 입력하기 -->
 	<insert id="insertMember" parameterType="com.gdu.cashbook.vo.Member">
 		INSERT INTO member(
 			member_id,
@@ -24,7 +35,7 @@
 			member_phone,
 			member_email
 		)VALUES(
-			#{memberId},<!-- #은 동적 개념 들어오는 값이 순간순간 변할수있다 -->
+			#{memberId},<!--$는 정적,  #은 동적 개념, 들어오는 값 순간순간 변할수있다 -->
 			#{memberPw},
 			#{memberName},
 			#{memberAddr},

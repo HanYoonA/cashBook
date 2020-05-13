@@ -26,7 +26,7 @@
 		
 		<!-- 세션분리 -->
 		<div th:if="${session.loginMember != null}">
-			<a href="/loginout" class="btn btn-primary">로그아웃</a>
+			<a href="/logout" class="btn btn-primary">로그아웃</a>
 		</div>
 		<div  th:if="${session.loginMember == null}">
 			<a href="/login" class="btn btn-primary">로그인</a>

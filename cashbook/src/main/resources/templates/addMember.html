@@ -64,6 +64,10 @@ $(document).ready(function() {
 			$('#myform').submit();
 		} 	
 	});
+	
+	$('#idBtn').click(function () {
+		$('#idForm').submit();
+	});
 });
 
 </script>
@@ -71,9 +75,17 @@ $(document).ready(function() {
 <body>
 <div class="container">
 	<h1>회원가입 </h1>		<!-- action="/addMember" => 해당 내용들은 /addMember 로 넘김 -->
-	<form method="post" action="/addMember" id="myform">
-		<div> <!--  id="" 는 css,자바스크랩 / name은 액션 --> 
-			아이디 : <input type="text" name="memberId" id="memberId">
+	<form id="idForm" method="post" action="/checkMemberId">
+		<div>
+			아이디 중복확인 : <input type="text" name="memberIdCheck" id="memberIdCheck" >
+			<button id="idBtn" type="button" >중복체크 </button>
+				<span th:text="${msg}"> </span>	
+		</div>
+	</form>		
+			
+	<form id="myform" method="post" action="/addMember" >
+		<div>
+			아이디 : <input type="text"  th:value="${memberIdCheck}" name="memberId" id="memberId" readonly="readonly" >  <!--  id="" 는 css,자바스크랩 / name은 액션 --> 
 			<span id="idHelper"></span> 
 		</div>
 		<div>

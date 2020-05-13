@@ -19,30 +19,48 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script >
-	$(document).ready(function () {
-		$('#btn').click(function () {
-			//유효성 검사 코드 구현 
-			/*
-			if(){
-				
-				return;  //if 문에 걸리면 밑에 코드 진행 안하고 return 종결  
-			}
-			*/			
-			$('#loginForm').submit();
-		});
+let helperInit = function() {
+	$('#idHelper').text("");
+	$('#pwHelper').text("");
+}
+
+$(document).ready(function() {
+	$('#btn').click(function() {
+		//유효성 검사 코드 구현 
+		if ($('#memberId').val().length === 0) { //입력값의 길이가 0인경우 "아이디를  입력해주세요"
+			helperInit();
+			$('#idHelper').text("아이디를  입력해주세요");
+			$('#memberId').focus();//커서 깜빡이 
+			clear();
+			return;
+		} else if ($('#memberPw').val().length === 0) {//입력값의 길이가 0인경우 "비밀번호  입력해주세요"
+			helperInit();
+			$('#pwHelper').text("비밀번호  입력해주세요");
+			$('#memberPw').focus();
+			clear();
+			return;
+			//if 문에 걸리면 밑에 코드 진행 안하고 return 종결  
+		}
+		$('#loginForm').submit();
 	});
+});
 </script>	
 </head>
 <body>
-	<h1> 로그인 </h1>
+	<h1> 로그인 </h1>	
 	<form id="loginForm" method="post" action="/login">
 		<div>
 			member_id:
 			<input type="text" id="memberId" name="memberId">
+			<span id="idHelper"></span>
 		</div>
 		<div>
 			member_pw:
 			<input type="text" id="memberPw" name="memberPw">
+			<span id="pwHelper"></span>
+		</div>
+		<div>
+			<span th:text="${msg}"></span>
 		</div>
 		<div>
 			<button type="button" id="btn">로그인 </button>
