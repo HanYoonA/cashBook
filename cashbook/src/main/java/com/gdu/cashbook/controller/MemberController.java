@@ -38,7 +38,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		}		
 	}
 	
-	@GetMapping("/logout")
+	@GetMapping("/loginout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";

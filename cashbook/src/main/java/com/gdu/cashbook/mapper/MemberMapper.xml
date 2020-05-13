@@ -9,7 +9,7 @@
 			resultType="com.gdu.cashbook.vo.LoginMember"> 
 		SELECT 
 			member_id as memberId,
-			member_pw as memberPw,
+			member_pw as memberPw
 		FROM member
 		WHERE member_id = #{memberId}
 		AND member_pw=#{memberPw} 	

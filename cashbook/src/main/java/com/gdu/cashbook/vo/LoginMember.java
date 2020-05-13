@@ -1,6 +1,6 @@
 package com.gdu.cashbook.vo;
 
-public class LoginMember {
+public class LoginMember { // table : Member
 	private String memberId;
 	private String memberPw;
 	
@@ -17,12 +17,10 @@ public class LoginMember {
 	public void setMemberPw(String memberPw) {
 		this.memberPw = memberPw;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + ", getMemberId()=" + getMemberId()
-				+ ", getMemberPw()=" + getMemberPw() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + "]";
 	}
-	
+
 }
