@@ -18,24 +18,35 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script >
+	$(document).ready(function () {
+		$('#btn').click(function () {
+			//유효성 검사 코드 구현 
+			/*
+			if(){
+				
+				return;  //if 문에 걸리면 밑에 코드 진행 안하고 return 종결  
+			}
+			*/			
+			$('#loginForm').submit();
+		});
+	});
+</script>	
 </head>
 <body>
-	<div class="container">
-		<!--  타임 리프지만 html인식함, 지금 템플릿 안에있어서 html이 아님  -->
-		<h1>가계부</h1>
-		
-		<!-- 세션분리 -->
-		<div th:if="${session.loginMember != null}">
-			<a href="/loginout" class="btn btn-primary">로그아웃</a>
-		</div>
-		<div  th:if="${session.loginMember == null}">
-			<a href="/login" class="btn btn-primary">로그인</a>
+	<h1> 로그인 </h1>
+	<form id="loginForm" method="post" action="/login">
+		<div>
+			member_id:
+			<input type="text" id="memberId" name="memberId">
 		</div>
 		<div>
-			<a href="/addMember" class="btn btn-primary">회원가입</a>
+			member_pw:
+			<input type="text" id="memberPw" name="memberPw">
 		</div>
-		<div>본 콘텐츠의 저작권은 제공처에 있으며, 이를 무단 이용하는 경우 저작권법 등에 따라 법적 책임을 질 수 있습니다.</div>
-		<div>Copyright © JWsoft Corp. All Rights Reserved.</div>
-	</div>
+		<div>
+			<button type="button" id="btn">로그인 </button>
+		</div>
+	</form>
 </body>
 </html>
