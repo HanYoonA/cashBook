@@ -20,8 +20,15 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1>home</h1>
-	<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  --> 
-	<div th:include="/include/menu::sidemenu"></div> <!--<jsp:include page=""> -->
+  <h1>회원탈퇴</h1>
+  <div th:include="/include/menu::sidemenu"></div> 
+  	<form method="Post" action="/removeMember">
+		<div>
+			memberPw:
+			<input type="password" name="memberPw">			
+			<button type="submit"> 삭제하기</button>
+		</div>
+	</form>
+	
 </body>
 </html>
