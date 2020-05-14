@@ -14,7 +14,6 @@ import com.gdu.cashbook.vo.Memberid;
 //@Service 
 //1.Spring bean등록
 //2.Transaction 
-
 @Service 
 @Transactional  // @Transactional CashbookService클레스안에(메소드)실행중에  하나라도 예외 발생하면 자동으로 롤백됨  , 메소드위에 위치할때는 해당 메소드 실행중에 오류가 있으면 취소 
 public class MemberService {
