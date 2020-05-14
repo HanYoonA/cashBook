@@ -47,24 +47,32 @@ $(document).ready(function() {
 </script>	
 </head>
 <body>
-	<h1> 로그인 </h1>	
-	<form id="loginForm" method="post" action="/login">
-		<div>
-			member_id:
-			<input type="text" id="memberId" name="memberId">
-			<span id="idHelper"></span>
-		</div>
-		<div>
-			member_pw:
-			<input type="text" id="memberPw" name="memberPw">
-			<span id="pwHelper"></span>
-		</div>
-		<div>
-			<span th:text="${msg}"></span>
-		</div>
-		<div>
-			<button type="button" id="btn">로그인 </button>
-		</div>
-	</form>
+<div class="container">
+	<div align="center">
+		<h1> 로그인 </h1>	
+		<form id="loginForm" method="post" action="/login">
+			<div>
+				member_id:
+				<input type="text" id="memberId" name="memberId" value="misun">
+				<span id="idHelper"></span>
+			</div>
+			<div>
+				member_pw:
+				<input type="password" id="memberPw" name="memberPw" value="1234">
+				<span id="pwHelper"></span>
+			</div>
+			<div>
+				<span th:text="${msg}"></span>
+			</div>
+			<div>
+				<a href=""> 아이디가 기억나지 않아요 </a><!-- 이메일 입력하면: 이메일에  아이디를 보내줌  -->
+				<a href=""> 비밀번호가 기억나지 않아요 </a> <!-- 아이디,이메일 같이 입력 하면: 관리자가 변경한 비밀번호 보내줌 -->
+			</div>
+			<div>
+				<button type="button" id="btn">로그인 </button>
+			</div>		
+		</form>
+	</div>
+</div>
 </body>
 </html>

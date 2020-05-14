@@ -21,6 +21,73 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	@Autowired  //주입  new생성자 연산자 대신해서 객체만듬 
 	private MemberService memberService;
 	
+	//회원정보 수정액션 
+	@PostMapping("/modifyMember")
+	public String modifyMember(HttpSession session, Member member) {
+	//로그인 상태 아니면 홈
+		if(session.getAttribute("loginMember")== null){ 
+			return "redirect:/";
+		}				
+		memberService.modifyMember(member);				
+		return "/memberInfo"; // memberInfo.html 페이지 보여중  		
+	}
+	
+	
+	
+	//회원정보 수정폼 보여주기  
+	@GetMapping("/modifyMember")
+	public String modifyMember(HttpSession session,Model model) {
+		//로그인 상태 아니면 홈
+		if(session.getAttribute("loginMember")== null){ 
+			return "redirect:/";
+		}
+		
+		Member member= memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		System.out.println("수정확인중"+member);
+		model.addAttribute("member", member);
+				
+		return "/update";		
+	}		
+	
+	//회원 탈퇴 폼보여주기 
+	@GetMapping("/removeMember")
+	public String removeMember(HttpSession session, LoginMember loginMember) {
+		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 인덱스로
+			return "redirect:/";
+		}				
+	      return "/removeMember";//input type="password"
+	}
+	
+	
+	@PostMapping("/removeMember")
+	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw) {
+		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 인덱스로
+			return "redirect:/";
+		}
+		
+		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+		loginMember.setMemberPw(memberPw);
+		memberService.removeMember(loginMember);
+		session.invalidate(); //세션지움, 로그아웃
+		
+		return "redirect:/index";
+	}
+	
+	
+	
+	//나의 정보 
+	@GetMapping("/memberInfo")
+	public String memberInfo(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 홈
+			return "redirect:/";
+		}
+		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));// session 오브젝트 타입인걸 LoginMember타입으로 형변환해줌
+		System.out.println(member);
+		model.addAttribute("member",member);
+		return "memberInfo"; //memberInfo.html 페이지 보여중  		
+	}
+	
+	
 	//회원 가입시 아이디 중복 체크 
 	@PostMapping("/checkMemberId") 
 	public String checkMemberId(Model model, HttpSession session, @RequestParam("memberIdCheck")String memberIdCheck) {
@@ -35,6 +102,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			// 아이디 사용 가능 
 			System.out.println("아이디를 사용할 수 있습니다");
 			model.addAttribute("memberIdCheck",memberIdCheck); 
+			
 		}else {
 			//아이디 사용 불가 
 			System.out.println("아이디를 사용할 수 있습니다 ! ");
@@ -71,7 +139,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "login"; 
 		}else{//로그인 성공시 (디비에 결과값 있으면 회원임)
 			session.setAttribute("loginMember", returnLoginMember);
-			return "redirect:/"; // 인덱스로 감 
+			return "redirect:/home"; // 홈으로감  
 		}		
 	}
 	
@@ -86,8 +154,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		return "redirect:/"; // 로그아웃 후 index 넘겨줌 
 	}
 	
-	
-	
+		
 	//회원가입 폼(get 링크) 
 	@GetMapping("/addMember")
 	public String addMember(HttpSession session) {

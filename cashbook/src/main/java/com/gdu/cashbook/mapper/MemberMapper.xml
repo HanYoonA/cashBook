@@ -3,17 +3,63 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+
+	<select id="" parameterType="String" resultType="String">
+		SELECT
+			member_pw as memberPw
+		FROM member
+		WHERE member_pw = PASSWORD(#{memberPw})
+	</select>
+	
+	
+	<!-- 회원정보수정 -->
+	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE 	member
+		SET member_name = #{memberName},
+			member_addr = #{memberAddr},
+			member_phone = #{memberPhone},
+			member_email = #{memberEmail}		
+		WHERE  member_id = #{memberId}		
+	</update>
+
+	<!-- 회원탈퇴 -->
+	<delete id ="deleteMember" 	parameterType="com.gdu.cashbook.vo.LoginMember"	>
+		DELETE FROM member
+		WHERE member_id =#{memberId}
+		AND member_pw=#{memberPw}	
+	</delete>
+
+	<select id = "selectMemberOne" 
+			parameterType="com.gdu.cashbook.vo.LoginMember"
+			resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,			
+			member_name as memberName, 
+			member_pw as memberPw,
+			member_addr as memberAddr,
+			member_phone as memberPhone,
+			member_email as memberEmail
+		FROM member
+		WHERE member_id =#{memberId}	 
+	
+	</select>
+
+
 	<!--  아이디 중복 체크 값이 있으면  아이디 사용못하고 값이 없으면 아이디 사용할 수 있음 -->
 	<select id="selectMemberId"  
 			parameterType="String"
 			resultType="String">
 		SELECT 
 			member_id <!-- 아디값 있으면  못씀 -->
-		FROM member
+		FROM (
+		 SELECT member_id FROM member <!-- 회원가입된 아이디랑, 삭제시 디비에 남는아디니는 중복체크할때 막혀야됨 -->
+		 UNION
+		 SELECT member_id FROM memberid	<!--  -->
+		)t
 		WHERE member_id = #{memberIdCheck}		
 	</select>
 	
-	
+	<!-- 로그인  -->
 	<select id="selectLoginMember" 
 			parameterType="com.gdu.cashbook.vo.LoginMember" 
 			resultType="com.gdu.cashbook.vo.LoginMember"> 
@@ -22,7 +68,7 @@
 			member_pw as memberPw
 		FROM member
 		WHERE member_id = #{memberId}
-		AND member_pw=#{memberPw} 	
+		AND member_pw=PASSWORD(#{memberPw}) 	
 	</select>
 
 	<!-- 회원가입, 정보 입력하기 -->
@@ -36,7 +82,7 @@
 			member_email
 		)VALUES(
 			#{memberId},<!--$는 정적,  #은 동적 개념, 들어오는 값 순간순간 변할수있다 -->
-			#{memberPw},
+			PASSWORD(#{memberPw}), <!-- 패스워드를 암호화해서 디비에 넣어줌  -->
 			#{memberName},
 			#{memberAddr},
 			#{memberPhone},

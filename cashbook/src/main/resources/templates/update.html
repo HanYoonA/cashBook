@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div align="center">
+		<h1> 하잉하잉, 수정폼일세</h1>
+		<form method="post" action="/modifyMember">
+			<table border="1" class="table" >
+			<tr>
+				<td>아이디:</td>
+				<td>
+					<input type="text" readonly="readonly" th:value="${member.memberId}" name="memberId">
+				</td>
+			</tr>
+			<tr>
+				<td>사용자이름:</td> 
+				<td>
+					<input type="text" th:value="${member.memberName}"  name="memberName">
+				</td>			
+			</tr>
+			<tr>
+				<td>주소:</td> 
+				<td>
+					<input type="text" th:value="${member.memberAddr}" name="memberAddr">
+				</td>
+			</tr>
+			<tr>
+				<td>전화번호 :</td>
+				<td>
+					<input type="text"  th:value="${member.memberPhone}"  name="memberPhone" >
+				</td>			
+			</tr>
+			<tr>
+				 <td>이메일 :</td>
+				 <td>
+				  <input type="text" th:value="${member.memberEmail}"  name="memberEmail" >
+				 </td>		
+			</tr>
+			<tr>		
+				<td>비밀번호:</td>
+				<td><input type="password"  name="memberPw1"  ></td>
+			</tr>			
+			<tr>	
+				<td>비밀번호 확인:</td>
+				<td> <input type="password"  name="memberPw2"></td>	
+			</tr>						
+			<tr> 
+				<td colspan="2"><button type="submit">수정완료</button></td>
+			</tr>
+			</table>	
+		</form>	
+	</div>
+</div>	
+</body>
+</html>
