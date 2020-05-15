@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>아이디 찾기 </h1>
+	<form id="myform" method="post" th:action="@{/findMemberId}"> <!-- 골뱅이 빠지면 src안에 web에서 찾음 -->
+		<div>
+			member_name:
+			<input type="text" name="memberName">
+		</div>
+		<div>
+			member_phone:
+			<input type="text" name="memberPhone">
+		</div>
+		<div>
+			member_mail:
+			<input type="text" name="memberEmail">
+		</div>
+		<div>
+			<!-- 제이쿼리 유효성 검사하고  보내는걸로 만들어야됨, 타입 버튼으로 바꿔야됨 -->
+			<button type="submit">아이디찾기 </button>
+		</div>
+	</form>
+</body>
+</html>

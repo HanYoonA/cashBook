@@ -3,7 +3,36 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+	<!-- 디버깅,주석, 커밋 메세지  -->
+	
+	<!-- 
+	비밀번호 찾기 순서 	
+	1.사용자 입력한  id의  email일치하면 pw변경(랜덤문자열) update 
+	2.2번에서 입력한 pw를 메일로 전송 
+	 -->
+	<update id="updateMemberPw"
+			parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE member 
+		SET	member_pw = PASSWORD(#{memberPw})
+		WHERE member_id = #{memberId}
+		AND member_email = #{memberEmail}
+	</update>
+		 
+	<!-- 아이디찾기 -->
+	<select id="selectMemberIdByMember" 
+			parameterType="com.gdu.cashbook.vo.Member"
+	    	resultType="String">
+		SELECT 
+			CONCAT(SUBSTRING(member_id,1,3),'****')
+		FROM member 
+		WHERE member_name= #{memberName}
+		AND member_phone = #{memberPhone}
+		AND member_email= #{memberEmail} 
+				
+		<!--  앞에 세자만 보이게 할거임 , 디비에서 세자리만 가져오기 -->
+	</select>
 
+	<!--  아직 수정중임  -->
 	<select id="" parameterType="String" resultType="String">
 		SELECT
 			member_pw as memberPw
@@ -18,7 +47,8 @@
 		SET member_name = #{memberName},
 			member_addr = #{memberAddr},
 			member_phone = #{memberPhone},
-			member_email = #{memberEmail}		
+			member_email = #{memberEmail},	
+			member_pw = PASSWORD(#{memberPw})  
 		WHERE  member_id = #{memberId}		
 	</update>
 
@@ -38,7 +68,8 @@
 			member_pw as memberPw,
 			member_addr as memberAddr,
 			member_phone as memberPhone,
-			member_email as memberEmail
+			member_email as memberEmail,
+			member_pic as memberPic
 		FROM member
 		WHERE member_id =#{memberId}	 
 	

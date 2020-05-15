@@ -21,6 +21,51 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	@Autowired  //주입  new생성자 연산자 대신해서 객체만듬 
 	private MemberService memberService;
 	
+	//비번찾기 액션 
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session, Model model, Member member) {
+		int row= memberService.getMemberPw(member);
+		String msg = "아이디와 메일을  확인하세요";
+		if(row == 1) {
+			msg="비밀번호를 입력한 메일로 전송하였습니다 "; 			
+		}
+		model.addAttribute("msg",msg);
+		return "memberPwView";
+	}
+			
+	//비번찾기findMemberPw 
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		if(session.getAttribute("loginMember")!= null){ 
+			return "redirect:/";
+		}				
+		return "findMemberPw"; 
+	}
+	
+
+	// 아이디 찾기 
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		if(session.getAttribute("loginMember")!= null){ 
+			return "redirect:/";
+		}				
+		return "findMemberId"; 
+	}
+	
+	//아이디 찾기 액션 
+	@PostMapping("/findMemberId")	
+	public String findMemberId(HttpSession session,Model model ,Member member) {
+		//로그인 상태 아니면 홈
+		if(session.getAttribute("loginMember")!= null){ 
+			return "redirect:/";
+		}			
+		String memberIdPart= memberService.getMemberIdByMember(member);
+		System.out.println(memberIdPart+"<-----memberIdpart");
+		model.addAttribute("memberIdPart", memberIdPart);		
+		return "memberIdView";
+	}
+	
+	
 	//회원정보 수정액션 
 	@PostMapping("/modifyMember")
 	public String modifyMember(HttpSession session, Member member) {
@@ -46,7 +91,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		System.out.println("수정확인중"+member);
 		model.addAttribute("member", member);
 				
-		return "/update";		
+		return "/updateMember";		
 	}		
 	
 	//회원 탈퇴 폼보여주기 
@@ -65,8 +110,11 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "redirect:/";
 		}
 		
-		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
-		loginMember.setMemberPw(memberPw);
+		LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));// 넘겨받은 아이디 넣어줌 -
+		loginMember.setMemberPw(memberPw);//넘겨받은 비번 넣어줌 
+		
+		System.out.println(loginMember +"삭제 멤버값 넘겨오나 ");
+		System.out.println(loginMember.getMemberPw() + "삭제 비번값 넘겨오나");
 		memberService.removeMember(loginMember);
 		session.invalidate(); //세션지움, 로그아웃
 		
