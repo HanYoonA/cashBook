@@ -5,11 +5,11 @@
 <mapper namespace="com.gdu.cashbook.mapper.MemberidMapper">
 	<!-- 아이디 넣기 -->
 	<insert id="insertMemberid"  parameterType="com.gdu.cashbook.vo.Memberid">
-		INSERT INTO memberid{
+		INSERT INTO memberid(
 			member_id
-		}VALUES{
+		)VALUES(
 			#{memberId}	
-		}
+		)
 	</insert> 
 </mapper>
 

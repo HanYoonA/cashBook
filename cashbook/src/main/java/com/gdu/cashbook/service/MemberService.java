@@ -18,8 +18,9 @@ import com.gdu.cashbook.vo.Memberid;
 //@Service 
 //1.Spring bean등록
 //2.Transaction 
-@Service 
+
 @Transactional  // @Transactional CashbookService클레스안에(메소드)실행중에  하나라도 예외 발생하면 자동으로 롤백됨  , 메소드위에 위치할때는 해당 메소드 실행중에 오류가 있으면 취소 
+@Service 
 public class MemberService {
 	//주입  new생성자 연산자 대신해서 객체만듬 
 	@Autowired private MemberMapper memberMapper;
@@ -60,14 +61,18 @@ public class MemberService {
 	}	
 	
 	//@Transactional 위에 안쓰고 여기다 써도됨, 회원탈퇴 void리턴은 생략이 가능함 (return;) 
-	public void removeMember(LoginMember loginMember) {	
+	public int removeMember(LoginMember loginMember) {	
 		//1.아이디 입력
 		Memberid memberid = new Memberid();
 		memberid.setMemberId(loginMember.getMemberId());
-		memberidMapper.insertMemberid(memberid);
+		System.out.println(memberid+"<--멤버아이디");
 		
-		//2.아이디 지움  둘중 하나 실패하면 롤백된다
-		memberMapper.deleteMember(loginMember);		
+		int row = memberMapper.deleteMember(loginMember);   // 맴퍼 성공하면 1, 실패 0값이 남음  
+		int row1 =0;
+		if(row ==1) {
+		 row1 =memberidMapper.insertMemberid(memberid); 
+		}	
+		return row1;
 	}
 	
 	//회원정보 

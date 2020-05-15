@@ -56,7 +56,7 @@
 	<delete id ="deleteMember" 	parameterType="com.gdu.cashbook.vo.LoginMember"	>
 		DELETE FROM member
 		WHERE member_id =#{memberId}
-		AND member_pw=#{memberPw}	
+		AND member_pw= PASSWORD(#{memberPw})	
 	</delete>
 
 	<select id = "selectMemberOne" 

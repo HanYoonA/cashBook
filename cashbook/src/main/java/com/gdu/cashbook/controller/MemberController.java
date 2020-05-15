@@ -100,12 +100,12 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 인덱스로
 			return "redirect:/";
 		}				
-	      return "/removeMember";//input type="password"
+	      return "removeMember";//input type="password"
 	}
 	
 	
 	@PostMapping("/removeMember")
-	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw) {
+	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw, Model model) {
 		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 인덱스로
 			return "redirect:/";
 		}
@@ -115,10 +115,15 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		
 		System.out.println(loginMember +"삭제 멤버값 넘겨오나 ");
 		System.out.println(loginMember.getMemberPw() + "삭제 비번값 넘겨오나");
-		memberService.removeMember(loginMember);
-		session.invalidate(); //세션지움, 로그아웃
+
+		int row=memberService.removeMember(loginMember);
 		
-		return "redirect:/index";
+		if(row==1) {			
+			session.invalidate(); //세션지움, 로그아웃			
+			return "redirect:/index";
+		}
+		model.addAttribute("msg", "비밀번호가 틀렸습니다.");
+		return "removeMember";
 	}
 	
 	
