@@ -1,13 +1,21 @@
 package com.gdu.cashbook.vo;
 
-public class Member { //table의 도메인 (스텍, 범위)과 일치한다고해서 도메인 타입 (vo,DTO)
+import org.springframework.web.multipart.MultipartFile;
+
+public class MemberForm {
 	private String memberId;
 	private String memberPw;
 	private String memberName;
 	private String memberAddr;
 	private String memberPhone;
 	private String memberEmail;
-	private String memberPic;
+	private MultipartFile memberPic;
+	@Override
+	public String toString() {
+		return "MemberForm [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
+				+ ", memberPic=" + memberPic + "]";
+	}
 	public String getMemberId() {
 		return memberId;
 	}
@@ -44,20 +52,10 @@ public class Member { //table의 도메인 (스텍, 범위)과 일치한다고�
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
-	public String getMemberPic() {
+	public MultipartFile getMemberPic() {
 		return memberPic;
 	}
-	public void setMemberPic(String memberPic) {
+	public void setMemberPic(MultipartFile memberPic) {
 		this.memberPic = memberPic;
 	}
-	@Override
-	public String toString() {
-		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
-				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
-				+ ", memberPic=" + memberPic + "]";
-	}
-	
-	
 }
-
-

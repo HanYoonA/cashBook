@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
+import com.gdu.cashbook.vo.MemberForm;
 //@Controller:
 //1.Spring bean등록, 객체가 자동으로 만들어준다 
 //2.implements Servlet의 기능을 가지게 된다 
@@ -220,16 +221,18 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	
 	//회원가입 액션(포스트 형식으로 넘겨 받음) 
 	@PostMapping("/addMember") 		//모든 잇풋 타입을 멤버로 받음 	 
-	public String addMember(Member member, HttpSession session) { //Command 객체, 도메인 객체 , 전부다 받아서 Member 타입으로 바꿔줌, (뷰)폼의  name이 vo안 이름과 같아야됨		
+	public String addMember(MemberForm memberForm, HttpSession session) { //Command 객체, 도메인 객체 , 전부다 받아서 Member 타입으로 바꿔줌, (뷰)폼의  name이 vo안 이름과 같아야됨		
 		//로그인 중일때 
 		if(session.getAttribute("loginMember")!= null){
 			return "redirect:/";
 		}
-		System.out.println(member.toString());
-		//System.out.println(member); //to String오버라이딩 되어있어서 member.
-		memberService.addMember(member);		
+		System.out.println(memberForm+"<---MemberForm");
+		//System.out.println(member.toString());		
+		memberService.addMember(memberForm);
+		//service: memberForm -> member +폴더에 파일도 저장 
 		return "redirect:/index";
 	}
+	
 	/*
 	@PostMapping("/addMember")
 	public String addMember(@RequestParam("memberId") String memberId,

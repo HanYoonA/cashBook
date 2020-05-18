@@ -110,14 +110,16 @@
 			member_name,
 			member_addr,
 			member_phone,
-			member_email
+			member_email,
+			member_pic
 		)VALUES(
 			#{memberId},<!--$는 정적,  #은 동적 개념, 들어오는 값 순간순간 변할수있다 -->
 			PASSWORD(#{memberPw}), <!-- 패스워드를 암호화해서 디비에 넣어줌  -->
 			#{memberName},
 			#{memberAddr},
 			#{memberPhone},
-			#{memberEmail}
+			#{memberEmail},
+			#{memberPic}
 		)
 	</insert>
 </mapper>

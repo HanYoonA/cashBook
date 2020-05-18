@@ -1,18 +1,23 @@
 package com.gdu.cashbook.service;
 
+import java.io.File;
 import java.util.UUID;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import com.gdu.cashbook.mapper.MemberMapper;
 import com.gdu.cashbook.mapper.MemberidMapper;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
+import com.gdu.cashbook.vo.MemberForm;
 import com.gdu.cashbook.vo.Memberid;
 
 //@Service 
@@ -91,7 +96,59 @@ public class MemberService {
 	}
 	
 	//회원가입
-	public int addMember(Member member) {
-		return memberMapper.insertMember(member);			
+	public int addMember(MemberForm memberForm) {
+		MultipartFile mf = memberForm.getMemberPic();
+		//확장자 필요 : 				
+		String originName= mf.getOriginalFilename();	
+		
+		/*
+		if(mf.getContentType().equals("imge/jpg") || mf.getContentType().equals("imge/png") ){//이미지 파일이  jpg거나 png경우 백업 
+			//업로드	
+		}else {
+			//업로드 실패
+		}
+		*/		
+		System.out.println(originName+ "<--originName" ); //꾸꾸까까.jpg<--originName
+		int lastDot= originName.lastIndexOf("."); // 마지막글자의 . (좌석표.png)
+		String extension =originName.substring(lastDot); 
+		
+		//새로운 이름을 생성: UUID
+		String memberPic= memberForm.getMemberId()+extension; 
+		
+		//1.디비에서 저장 
+		// memberForm -> member
+		// 파일 -> 디스크에 물리적으로 저장
+		Member member = new Member(); 
+		member.setMemberId(memberForm.getMemberId());
+		member.setMemberPw(memberForm.getMemberPw());
+		member.setMemberAddr(memberForm.getMemberAddr());
+		member.setMemberEmail(memberForm.getMemberEmail());
+		member.setMemberName(memberForm.getMemberName());
+		member.setMemberPhone(memberForm.getMemberPhone());
+		member.setMemberPic(memberPic);
+		System.out.println(member+"<-----MemberService.addMemeber:member 출력해볼게");
+		int row = memberMapper.insertMember(member);
+		
+		//2.파일저장
+		String path="C:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload"; // 여기다가 파일을 저장 할거임	
+		File file = new File(path+"\\"+memberPic);
+		try {
+			mf.transferTo(file);
+		} catch (Exception e) {			
+			e.printStackTrace();
+			throw new RuntimeException(); 
+		}		
+	         // Exception 
+	         //1.예외처리를 해야만 문법적으로 이상없는 예외 
+	         //2.예외처리를 토드에서 구현하지 않아도 아무문제 없는 예외 RuntimeException
+	 
+	      return row;//return memberMapper.insertMember(member); // 파일이름과 확장자가 따로저장됨	
+		
 	}
 }
+
+
+
+
+
+
