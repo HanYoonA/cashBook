@@ -45,8 +45,14 @@ $(document).ready(function() {
 	<div th:include="/include/menu::sidemenu"></div>
 	<div align="center">
 		<h1> 하잉하잉, 수정폼일세</h1>
-		<form id="idForm" method="post" action="/modifyMember">
+		<form id="idForm" method="post" action="/modifyMember" enctype="multipart/form-data">
 			<table border="1" class="table" >
+			<tr>
+				<td colspan="2">
+					사진: 								
+					<input  type="file" name="memberPic" id="pic"  >
+				</td>				
+			</tr>			
 			<tr>
 				<td>아이디:</td>
 				<td>
@@ -79,12 +85,12 @@ $(document).ready(function() {
 			</tr>
 			<tr>		
 				<td>비밀번호:</td>
-				<td><input type="password"  name="memberPw" id="memberPw" ></td>
+				<td><input type="password"  name="memberPw" id="memberPw"></td>
 			</tr>			
 			<tr>	
 				<td>비밀번호 확인:</td>
-				<td> <input type="password"  id="memberPw2"></td>		
-				<td><span id="pwHelper"></span>	</td>
+				<td> <input type="password"  id="memberPw2">		
+				<span id="pwHelper"></span>	</td>
 			</tr>						
 			<tr> 
 				<td colspan="2"><button type="button" id="btn">수정완료</button></td>

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class MemberService {
 	@Autowired private MemberMapper memberMapper;
 	@Autowired private MemberidMapper memberidMapper;
 	@Autowired private JavaMailSender javaMailSender;//@Conponent
+	@Value("C:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
+	private String path;
 	
 	public int getMemberPw(Member member) { //id&email
 		//pw추가 
@@ -61,21 +64,72 @@ public class MemberService {
 	}
 	
 	//회원정보 수정(입력값 넣기)
-	public int modifyMember(Member member) {
-		 return memberMapper.updateMember(member);
+	public int modifyMember(MemberForm memberForm) {
+		MultipartFile mf = memberForm.getMemberPic();
+		//확장자 필요		
+		String originName= mf.getOriginalFilename();	
+		 
+		 System.out.println(originName+ "<--originName" ); //꾸꾸까까.jpg<--originName
+			int lastDot= originName.lastIndexOf("."); // 마지막글자의 . (좌석표.png)
+			String extension =originName.substring(lastDot); 
+			
+			//새로운 이름을 생성: UUID
+			String memberPic= memberForm.getMemberId()+extension; 
+			
+			//1.디비에서 저장 
+			Member member = new Member(); 
+			member.setMemberId(memberForm.getMemberId());
+			member.setMemberPw(memberForm.getMemberPw());
+			member.setMemberAddr(memberForm.getMemberAddr());
+			member.setMemberEmail(memberForm.getMemberEmail());
+			member.setMemberName(memberForm.getMemberName());
+			member.setMemberPhone(memberForm.getMemberPhone());
+			member.setMemberPic(memberPic);
+			System.out.println(member+"<-----MemberService.addMemeber:member 출력해볼게");
+			int row = memberMapper.updateMember(member);
+			
+			//2.파일저장
+			
+			File file = new File(this.path+memberPic);
+			 
+			try {
+				mf.transferTo(file);
+			} catch (Exception e) {			
+				e.printStackTrace();
+				throw new RuntimeException(); 
+			}		
+		         // Exception 
+		         //1.예외처리를 해야만 문법적으로 이상없는 예외 
+		         //2.예외처리를 토드에서 구현하지 않아도 아무문제 없는 예외 RuntimeException
+		 
+		      return row;
 	}	
 	
 	//@Transactional 위에 안쓰고 여기다 써도됨, 회원탈퇴 void리턴은 생략이 가능함 (return;) 
 	public int removeMember(LoginMember loginMember) {	
-		//1.아이디 입력
+		//1.멤버이미지 파일 삭제
+		//1_1 파일이름 select member_pic from member 
+		String memberPic = memberMapper.selectMemberPic(loginMember.getMemberId());
+		System.out.println(memberPic+"<---memberPic");
+		//1_2 파일삭제
+		File file = new File(this.path+memberPic);
+		 /*if(file.exists()) {
+				file.delete();
+			}*/
+		
+		//2.아이디 입력
 		Memberid memberid = new Memberid();
 		memberid.setMemberId(loginMember.getMemberId());
 		System.out.println(memberid+"<--멤버아이디");
-		
+		//3.
 		int row = memberMapper.deleteMember(loginMember);   // 맴퍼 성공하면 1, 실패 0값이 남음  
 		int row1 =0;
 		if(row ==1) {
 		 row1 =memberidMapper.insertMemberid(memberid); 
+		 if(file.exists()) {
+				file.delete();
+			}
+		 
 		}	
 		return row1;
 	}
@@ -130,8 +184,10 @@ public class MemberService {
 		int row = memberMapper.insertMember(member);
 		
 		//2.파일저장
-		String path="C:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload"; // 여기다가 파일을 저장 할거임	
-		File file = new File(path+"\\"+memberPic);
+		// / linux
+		// \ window
+		//String path="C:/git-cashbook/cashbook/src/main/resources\\static\\upload"; // 여기다가 파일을 저장 할거임	
+		File file = new File(this.path+memberPic);
 		try {
 			mf.transferTo(file);
 		} catch (Exception e) {			

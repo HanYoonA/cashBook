@@ -4,6 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
 	<!-- 디버깅,주석, 커밋 메세지  -->
+	<select id="selectMemberPic"
+			parameterType="String"
+			resultType="String">
+		SELECT member_pic
+		FROM member
+		WHERE member_id=#{memberId}	
+	</select>
+	
+	
 	
 	<!-- 
 	비밀번호 찾기 순서 	
@@ -48,7 +57,8 @@
 			member_addr = #{memberAddr},
 			member_phone = #{memberPhone},
 			member_email = #{memberEmail},	
-			member_pw = PASSWORD(#{memberPw})  
+			member_pw = PASSWORD(#{memberPw}),
+			member_pic= #{memberPic}  
 		WHERE  member_id = #{memberId}		
 	</update>
 

@@ -7,6 +7,10 @@ import com.gdu.cashbook.vo.Member;
 
 @Mapper //@Mapper의 기능 + @Component(객체)의 기능 둘다함
 public interface MemberMapper {
+	
+	//아이디를 넣어주면 멤버 이미지를 리턴 
+	public String selectMemberPic(String memberId); 
+	
 	//비밀번호 찾기
 	public int updateMemberPw(Member member);
 	//아이디 찾기 

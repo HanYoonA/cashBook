@@ -69,12 +69,12 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	
 	//회원정보 수정액션 
 	@PostMapping("/modifyMember")
-	public String modifyMember(HttpSession session, Member member) {
+	public String modifyMember(HttpSession session, MemberForm memberForm) {
 	//로그인 상태 아니면 홈
 		if(session.getAttribute("loginMember")== null){ 
 			return "redirect:/";
 		}				
-		memberService.modifyMember(member);				
+		memberService.modifyMember(memberForm);				
 		return "/memberInfo"; // memberInfo.html 페이지 보여중  		
 	}
 	
@@ -82,7 +82,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	
 	//회원정보 수정폼 보여주기  
 	@GetMapping("/modifyMember")
-	public String modifyMember(HttpSession session,Model model) {
+	public String modifyMember(HttpSession session,Model model ) {
 		//로그인 상태 아니면 홈
 		if(session.getAttribute("loginMember")== null){ 
 			return "redirect:/";
@@ -227,7 +227,14 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "redirect:/";
 		}
 		System.out.println(memberForm+"<---MemberForm");
-		//System.out.println(member.toString());		
+		if(memberForm.getMemberPic()!=null) {
+			//파일은  .png .jpg .gif만 업로드 가능 
+			if(!memberForm.getMemberPic().getContentType().equals("image/png") 
+				&& !memberForm.getMemberPic().getContentType().equals("image/jpeg") 
+				&&	!memberForm.getMemberPic().getContentType().equals("image/gif") ) {
+				return "redirect:/addMember";
+			}
+		}		
 		memberService.addMember(memberForm);
 		//service: memberForm -> member +폴더에 파일도 저장 
 		return "redirect:/index";
