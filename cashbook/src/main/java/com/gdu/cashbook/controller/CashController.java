@@ -1,15 +1,18 @@
 package com.gdu.cashbook.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
 import com.gdu.cashbook.vo.Cash;
@@ -20,31 +23,36 @@ public class CashController {
 	@Autowired private CashService cashService;
 	
 	@GetMapping("getCashListByDate")
-	public String getCashListByDate(HttpSession session,Model model) {
+	public String getCashListByDate(HttpSession session,
+						Model model,							//문자열로 넘어오면  LocalDate형으로 바꿈
+						@RequestParam(value = "day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) { 
+	
+		if(day ==null) {
+			day = LocalDate.now();
+		}
+		 System.out.println(day + "<--day");
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/";
 		}
+		
 		//로그인 아이디 
 		String loginMemberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
-		//오늘날짜를 구해서 우리가 원하는 문자열 형태로 변경 
-		//Calendar today= Calendar.getInstance();//"yyyy-mm-dd"		
-		Date today = new Date();
-		SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd");		
-		String strToday=sdf.format(today);//원래는 길게 나오는데  2020-05-19 로 만듬		
-		System.out.println(strToday+"<---strToday");
 		
 		Cash cash = new Cash();// +id, +date 날짜형식 ("yyyy-mm-dd")로 바꿔야됨
 		cash.setMemberId(loginMemberId);
-		cash.setCashDate(strToday);
-		
+		cash.setCashDate(day.toString()); 		
+		System.out.println(day.toString()+"<-------day.toString()");		
+	
 		List <Cash> cashList = cashService.getCashListByDate(cash);
 		model.addAttribute("cashList",cashList);
-		model.addAttribute("today", today);
+		model.addAttribute("day", day);
 		
 		//디버깅 코드 
 		 for(Cash c :cashList) {
 			 System.out.println(c);
-		 }				
-		return "getCashListByDate";		
+		 }
+					
+		return "getCashListByDate";	
+				
 	}		
 }

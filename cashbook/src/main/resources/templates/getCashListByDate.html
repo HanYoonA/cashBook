@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  -->
+	<div th:include="/include/menu::sidemenu"></div>
+	<!--<jsp:include page=""> -->
+	<div align="center">
+		<h1>2020년 가계부</h1>
+		<h3 th:text="${day}"></h3>
+	
+		<div>			
+			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
+			<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+		</div>
+		<table border="1">
+			<thead>
+				<tr>
+					<td>&nbsp;</td>
+					<td>카테고리</td>
+					<td>수입</td>
+					<td>지출</td>
+					<td>장소</td>
+					<td>메모</td>
+					<td>삭제</td>
+					<td>수정</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cash, index:${cashList}">
+					<td th:text="${index.index}+1"></td>
+					<td th:text="${cash.categoryName}"></td>
+
+					<!-- 타임리프 if~else문 : if/unless -->
+					<td th:if="${cash.cashKind} == '수입'"
+						th:text="${'+'+ cash.cashPrice}"></td>
+					<td th:unless="${cash.cashKind} == '수입'"></td>
+
+					<!-- 타임리프 if~else문 : if/unless  -->
+					<td th:if="${cash.cashKind} =='지출'"
+						th:text="${'-'+ cash.cashPrice}"></td>
+					<td th:unless="${cash.cashKind} == '지출'"></td>
+
+					<td th:text="${cash.cashPlace}"></td>
+					<td th:text="${cash.cashMemo}"></td>
+					<td><a th:href="@{/removeCash(cashNo=${cash.CashNo})}">삭제</a></td>
+					<td><a href="">수정</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div>합계</div>
+		<div>
+			<button type="button">입력</button>
+		</div>	
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
