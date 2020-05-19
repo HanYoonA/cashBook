@@ -75,7 +75,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "redirect:/";
 		}				
 		memberService.modifyMember(memberForm);				
-		return "redirect:/"; // memberInfo.html 페이지 보여중  		
+		return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  		
 	}
 	
 	

@@ -53,11 +53,9 @@
 					<td th:if="${cash.cashKind} == '수입'"
 						th:text="${'+'+ cash.cashPrice}"></td>
 					<td th:unless="${cash.cashKind} == '수입'"></td>
-
-					<!-- 타임리프 if~else문 : if/unless  -->
-					<td th:if="${cash.cashKind} =='지출'"
-						th:text="${'-'+ cash.cashPrice}"></td>
-					<td th:unless="${cash.cashKind} == '지출'"></td>
+				
+					<!-- 삼항연산자 : 조건 ? 참값 : 거짓값  -->
+					<td th:text="${cash.cashKind} == '지출' ? ${'-' + cash.cashPrice} : ''"></td>
 
 					<td th:text="${cash.cashPlace}"></td>
 					<td th:text="${cash.cashMemo}"></td>
@@ -66,7 +64,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div>합계</div>
+		<div>(수입+지출)합계:<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span></div>
 		<div>
 			<button type="button">입력</button>
 		</div>	

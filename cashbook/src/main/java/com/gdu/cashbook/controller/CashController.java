@@ -1,10 +1,8 @@
 package com.gdu.cashbook.controller;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
+import java.time.LocalDate;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,14 @@ import com.gdu.cashbook.vo.LoginMember;
 @Controller
 public class CashController {
 	@Autowired private CashService cashService;
+	
+	
+	@GetMapping("removeCash")
+	public String removeCash(HttpSession session, Cash cashNo) {
+		cashService.removeCash(cashNo);
+		return "redirect:/getCashListByDate";
+		
+	}
 	
 	@GetMapping("getCashListByDate")
 	public String getCashListByDate(HttpSession session,
@@ -43,14 +49,16 @@ public class CashController {
 		cash.setCashDate(day.toString()); 		
 		System.out.println(day.toString()+"<-------day.toString()");		
 	
-		List <Cash> cashList = cashService.getCashListByDate(cash);
-		model.addAttribute("cashList",cashList);
+		Map<String, Object> map = cashService.getCashListByDate(cash);
 		model.addAttribute("day", day);
+		model.addAttribute("cashList",map.get("cashList"));
+		model.addAttribute("cashKindSum",map.get("cashKindSum"));
+	
 		
 		//디버깅 코드 
-		 for(Cash c :cashList) {
-			 System.out.println(c);
-		 }
+		// for(Cash c :cashList) {
+		//	 System.out.println(c);
+		// }
 					
 		return "getCashListByDate";	
 				

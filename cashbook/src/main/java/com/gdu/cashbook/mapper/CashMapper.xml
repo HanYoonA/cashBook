@@ -3,6 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
+	<delete id="delectCash" parameterType="com.gdu.cashbook.vo.Cash"  >
+		DELETE FROM cash
+		WHERE cash_no= #{cashNo}	
+	</delete>
+	
+	<!--합계  -->
+	<select id="selectCashKindSum" 
+			parameterType="com.gdu.cashbook.vo.Cash" 
+			resultType="int">
+		<!--SELECT 
+			(SELECT SUM(cash_price) FROM cash WHERE member_id=#{memberId} AND cash_kind='수입' AND cash_date=#{cashDate})
+			-
+			(SELECT SUM(cash_price) FROM cash WHERE member_id=#{memberId} AND cash_kind='지출' AND cash_date=#{cashDate})
+		FROM dual;	 -->			
+		
+	  SELECT
+         (SELECT 
+            IFNULL(SUM(cash_price), 0)   <!-- IFNULL은 해당 필드의 값이 NULL을 반환할때 다른 값으로 출력할 수 있도록 하는 함수이다.  -->
+         FROM cash
+         WHERE member_id = #{memberId} AND cash_kind = '수입' AND cash_date = #{cashDate})
+         -
+         (SELECT 
+            IFNULL(SUM(cash_price), 0)
+         FROM cash
+         WHERE member_id = #{memberId} AND cash_kind = '지출' AND cash_date = #{cashDate})
+      FROM dual; 
+	</select>
+
+	<!-- 리스트 -->
 	<select id="selectCashListByDate"
 			parameterType="com.gdu.cashbook.vo.Cash"
 			resultType="com.gdu.cashbook.vo.Cash">
