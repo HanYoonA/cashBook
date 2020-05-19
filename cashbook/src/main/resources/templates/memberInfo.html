@@ -30,8 +30,10 @@
 	<table class="table" >
 		<tr>
 			<td th:text="${member.memberPic}">사진</td>
-			<td>				
-				 <img th:src="${'/upload/'+member.memberPic}">
+			<td>
+			  <img th:src="@{${'/upload/'+member.memberPic}}" width="400" height="500">
+							
+				<!-- <img th:src="${'/upload/'+member.memberPic}"> --> 
 			</td>
 		</tr>
 		<tr>
