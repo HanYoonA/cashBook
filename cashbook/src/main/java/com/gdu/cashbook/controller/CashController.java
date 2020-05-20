@@ -27,7 +27,7 @@ public class CashController {
 	//달별로 
 	@GetMapping("getCashListByMonth")
 	public String getCashListByMonth(HttpSession session,
-						Model model,							//문자열로 넘어오면  LocalDate형으로 바꿈
+						Model model,							       //문자열로 넘어오면  LocalDate형으로 바꿈
 						@RequestParam(value = "day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
 		
 		//로그인 하면 리다이렉트..
