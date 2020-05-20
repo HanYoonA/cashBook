@@ -10,12 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook.mapper.CashMapper;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.DayAndPrice;
 
 @Service
 @Transactional
 public class CashService {
 	@Autowired private CashMapper cashMapper;
 	
+	public List<DayAndPrice> getCashAndPriceList(String memberId, int year,  int month){
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("year", year);
+		map.put("month", month);	
+		return cashMapper.selectDayAndPriceList(map);		
+	
+	
+	}
 	//Cash 삭제 
 	public int removeCash(Cash cashNo) {
 		int row= cashMapper.delectCash(cashNo);		
