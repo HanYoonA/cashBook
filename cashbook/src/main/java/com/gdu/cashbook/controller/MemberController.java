@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
@@ -67,19 +68,6 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	}
 	
 	
-	//회원정보 수정액션 
-	@PostMapping("/modifyMember")
-	public String modifyMember(HttpSession session, MemberForm memberForm) {
-	//로그인 상태 아니면 홈
-		if(session.getAttribute("loginMember")== null){ 
-			return "redirect:/";
-		}				
-		memberService.modifyMember(memberForm);				
-		return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  		
-	}
-	
-	
-	
 	//회원정보 수정폼 보여주기  
 	@GetMapping("/modifyMember")
 	public String modifyMember(HttpSession session,Model model ) {
@@ -94,6 +82,20 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 				
 		return "/updateMember";		
 	}		
+	
+	
+	//회원정보 수정액션 
+	@PostMapping("/modifyMember")
+	public String modifyMember(HttpSession session, MemberForm memberForm) {
+	//로그인 상태 아니면 홈
+		if(session.getAttribute("loginMember")== null){ 
+			return "redirect:/";
+		}
+		
+		memberService.modifyMember(memberForm);				
+		return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  		
+	}
+			
 	
 	//회원 탈퇴 폼보여주기 
 	@GetMapping("/removeMember")

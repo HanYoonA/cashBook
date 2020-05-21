@@ -18,56 +18,72 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<style >  
+ #aside {
+     width: 200px;
+     height: 3000px;
+     position: fixed;
+     background: #5BA8D8;
+     overflow: hidden;
+     float: left;
+ }
+</style>	
 </head>
 <body>
-	<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  -->
-	<div th:include="/include/menu::sidemenu"></div>
-	<!--<jsp:include page=""> -->
-	<div align="center">
-		<h1>2020년 가계부</h1>
-		<h3 th:text="${day}"></h3>
-	
-		<div>			
-			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
-			<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+	<div class="row">
+		<div class="col-sm-2" >
+			<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  -->
+			<div id="aside" th:include="/include/menu::sidemenu"></div>
 		</div>
-		<table border="1">
-			<thead>
-				<tr>
-					<td>&nbsp;</td>
-					<td>카테고리</td>
-					<td>수입</td>
-					<td>지출</td>
-					<td>장소</td>
-					<td>메모</td>
-					<td>삭제</td>
-					<td>수정</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="cash, index:${cashList}">
-					<td th:text="${index.index}+1"></td>
-					<td th:text="${cash.categoryName}"></td>
-
-					<!-- 타임리프 if~else문 : if/unless -->
-					<td th:if="${cash.cashKind} == '수입'"
-						th:text="${'+'+ cash.cashPrice}"></td>
-					<td th:unless="${cash.cashKind} == '수입'"></td>
-				
-					<!-- 삼항연산자 : 조건 ? 참값 : 거짓값  -->
-					<td th:text="${cash.cashKind} == '지출' ? ${'-' + cash.cashPrice} : ''"></td>					
-
-					<td th:text="${cash.cashPlace}"></td>
-					<td th:text="${cash.cashMemo}"></td>
-					<td><a th:href="@{/removeCash(cashNo=${cash.CashNo})}">삭제</a></td>
-					<td><a href="">수정</a></td>
-				</tr>
-			</tbody>
-		</table>
-		<div>(수입+지출)합계:<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span></div>
-		<div>
-			<button type="button">입력</button>
-		</div>	
+		<div  class="col-sm-10" >
+			<!--<jsp:include page=""> -->			
+				<h1>2020년 가계부</h1>
+				<h3 th:text="${day}"></h3>
+			
+				<div>			
+					<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
+					<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+				</div>
+				<table border="1">
+					<thead>
+						<tr>
+							<td>&nbsp;</td>
+							<td>카테고리</td>
+							<td>수입</td>
+							<td>지출</td>
+							<td>장소</td>
+							<td>메모</td>
+							<td>삭제</td>
+							<td>수정</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cash, index:${cashList}">
+							<td th:text="${index.index}+1"></td>
+							<td th:text="${cash.categoryName}"></td>
+		
+							<!-- 타임리프 if~else문 : if/unless -->
+							<td th:if="${cash.cashKind} == '수입'"
+								th:text="${'+'+ cash.cashPrice}"></td>
+							<td th:unless="${cash.cashKind} == '수입'"></td>
+						
+							<!-- 삼항연산자 : 조건 ? 참값 : 거짓값  -->
+							<td th:text="${cash.cashKind} == '지출' ? ${'-' + cash.cashPrice} : ''"></td>					
+		
+							<td th:text="${cash.cashPlace}"></td>
+							<td th:text="${cash.cashMemo}"></td>
+							<td><a th:href="@{/removeCash(cashNo=${cash.CashNo})}">삭제</a></td>
+							<td><a href="">수정</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<div>(수입+지출)합계:<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span></div>
+				<div>
+					<button type="button">입력</button>
+				</div>	
+			</div>
+		</div>
 	</div>
 </body>
 </html>

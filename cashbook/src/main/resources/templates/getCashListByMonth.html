@@ -32,6 +32,14 @@
 	.gd-red{
 		color:red;
 	}
+	 #aside {
+     width: 200px;
+     height: 100%;
+     position: fixed;
+     background: #5BA8D8;
+     overflow: hidden;
+     float: left;
+ }
 
 </style>
 
@@ -50,46 +58,51 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<div class="container">
-	<h1>월별 가계부 관리 </h1>
-	<div th:include="/include/menu::sidemenu"></div> 
-	<h3 th:text="${month+'월'}"></h3> <!-- cDay.get(Calendar.MONTH)+1 -->
-	<h3 th:text="${#temporals.format(day,'yyyy-MM')}"></h3>
-	
-	<div>			
-		<a th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}">이전</a> 
-		<a th:href="@{/getCashListByMonth(day=${day.plusMonths(+1)})}">다음</a>
-	</div>
-	
-	<div class="gd-left gd-clear gd-title">일</div>
-	<div class="gd-left gd-title">월</div>
-	<div class="gd-left gd-title">화</div>
-	<div class="gd-left gd-title">수</div>
-	<div class="gd-left gd-title">목</div>
-	<div class="gd-left gd-title">금</div>
-	<div class="gd-left gd-title">토</div> <!-- <div th:text="${lastDay + '일'}"> </div> -->		
-	
-	<!--5월달 lastDay==31 --> <!-- 삼항연산자 : 조건 ? 참값 : 거짓값  -->
-	<div th:each="i,index: ${#numbers.sequence(1,lastDay+(firstDayOfWeek-1))}"  
-         th:class="${index.index%7}==0 ? 'gd-clear gd-left': 'gd-left'"> <!--  7로 나누었을때 0으로 떨어지면 'gd-clear gd-left'적용  아니면 : 'gd-left'  -->
-         <div th:text="${i-(firstDayOfWeek-1)}>0 ?  ${i-(firstDayOfWeek-1)}:''"></div><!-- {i-(firstDayOfWeek-1)}값이 0보다 크면 출력 그게 아니면 공백('')으로 표현  -->
-         <div th:each="dp : ${dayAndPriceList}"><!-- 수입지출합, 컨트롤러에서 받은거 가져오기 , 반복문 리스트를 dp에 담음 -->
-            <span th:if="${i-(firstDayOfWeek-1)}==${dp.day}"> <!--  반복문안에 이프문 넣음  -->
-           		<span th:if="${dp.price}>=0">
-           				<span th:text="'수입:'"></span>
-          				<span th:class="gd-blue" th:text="${dp.price}"> </span>
-          		 </span>			
-          		 <span th:unless="${dp.price}>=0"> 
-          		 		<span th:text="'지출:'"></span>
-          				<span th:class="gd-red" th:text="${dp.price}"> </span>        		 
-          		 </span>     		 	
-           		<!-- <span th:class="${dp.price}>=0? 'gd-blue' : 'gd-red'" th:text="${dp.price}" ></span><!--{dp.price}값이 0보다 크면  css속성  ? 'gd-blue'  파란색  그게아니면  'gd-red' 빨간-->
-            </span>
-         </div>
+	<div class="row">
+		<div class="col-sm-2">			
+			<div id="aside" th:include="/include/menu::sidemenu"></div> 			
+		</div>
+		
+		<div  class="col-sm-10">
+			<h1>월별 가계부 관리 </h1>
+			<h3 th:text="${month+'월'}"></h3> <!-- cDay.get(Calendar.MONTH)+1 -->
+			<h3 th:text="${#temporals.format(day,'yyyy-MM')}"></h3>
+			<div>			
+				<a th:href="@{/getCashListByMonth(day=${day.plusMonths(-1)})}">이전</a> 
+				<a th:href="@{/getCashListByMonth(day=${day.plusMonths(+1)})}">다음</a>
+			</div>
+			
+			<div class="gd-left gd-clear gd-title">일</div>
+			<div class="gd-left gd-title">월</div>
+			<div class="gd-left gd-title">화</div>
+			<div class="gd-left gd-title">수</div>
+			<div class="gd-left gd-title">목</div>
+			<div class="gd-left gd-title">금</div>
+			<div class="gd-left gd-title">토</div> <!-- <div th:text="${lastDay + '일'}"> </div> -->		
+			
+			<!--5월달 lastDay==31 --> <!-- 삼항연산자 : 조건 ? 참값 : 거짓값  -->
+			<div th:each="i,index: ${#numbers.sequence(1,lastDay+(firstDayOfWeek-1))}"  
+		         th:class="${index.index%7}==0 ? 'gd-clear gd-left': 'gd-left'"> <!--  7로 나누었을때 0으로 떨어지면 'gd-clear gd-left'적용  아니면 : 'gd-left'  -->
+		         <div th:text="${i-(firstDayOfWeek-1)}>0 ?  ${i-(firstDayOfWeek-1)}:''"></div><!-- {i-(firstDayOfWeek-1)}값이 0보다 크면 출력 그게 아니면 공백('')으로 표현  -->
+		         <div th:each="dp : ${dayAndPriceList}"><!-- 수입지출합, 컨트롤러에서 받은거 가져오기 , 반복문 리스트를 dp에 담음 -->
+		            <span th:if="${i-(firstDayOfWeek-1)}==${dp.day}"> <!--  반복문안에 이프문 넣음  -->
+		           		<span th:if="${dp.price}>=0">
+		           				<span th:text="'수입:'"></span>
+		          				<span th:class="gd-blue" th:text="${dp.price}"> </span>
+		          		 </span>			
+		          		 <span th:unless="${dp.price}>=0"> 
+		          		 		<span th:text="'지출:'"></span>
+		          				<span th:class="gd-red" th:text="${dp.price}"> </span>        		 
+		          		 </span>     		 	
+		           		<!-- <span th:class="${dp.price}>=0? 'gd-blue' : 'gd-red'" th:text="${dp.price}" ></span><!--{dp.price}값이 0보다 크면  css속성  ? 'gd-blue'  파란색  그게아니면  'gd-red' 빨간-->
+		            </span>
+		         </div>
+		      </div>	      
+	      </div>
       </div>		
-	</div>	
 </body>
 </html>
 

@@ -20,8 +20,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div  class="row">
 	<!-- fregment1 --> <!-- /include/menu::sidemenu로 해당 디브 불러낼 수 있음--> 
-	<div th:fragment="sidemenu"> 
+	<div class="col-sm-4" th:fragment="sidemenu"> 
 		<div><span th:text="${session.loginMember.memberId}"></span>님</div>
 		<ul>
 			<li><a th:href="@{/home}">홈</a></li>	
@@ -32,7 +33,8 @@
 			<li><a th:href="@{/logout}">로그아웃</a></li>
 		</ul>		
 	</div>
-	
+	<div  class="col-sm-8" > </div>
+</div>	
 
 	<!-- fregment2 -->
 
