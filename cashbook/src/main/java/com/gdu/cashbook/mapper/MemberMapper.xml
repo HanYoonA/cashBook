@@ -12,7 +12,28 @@
 		WHERE member_id=#{memberId}	
 	</select>
 	
+	<!-- pic 빈값일때 회원정보 수정 -->
+	<update id="updateNoPicMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE member 
+		SET member_name = #{memberName},
+			member_addr = #{memberAddr},
+			member_phone = #{memberPhone},
+			member_email = #{memberEmail},	
+			member_pw = PASSWORD(#{memberPw})				
+		WHERE member_id	=#{memberId}	
+	</update>
 	
+	<!-- 회원정보수정 -->
+	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE 	member
+		SET member_name = #{memberName},
+			member_addr = #{memberAddr},
+			member_phone = #{memberPhone},
+			member_email = #{memberEmail},	
+			member_pw = PASSWORD(#{memberPw}),
+			member_pic= #{memberPic}  
+		WHERE  member_id = #{memberId}		
+	</update>
 	
 	<!-- 
 	비밀번호 찾기 순서 	
@@ -41,26 +62,6 @@
 		<!--  앞에 세자만 보이게 할거임 , 디비에서 세자리만 가져오기 -->
 	</select>
 
-	<!--  아직 수정중임  -->
-	<select id="" parameterType="String" resultType="String">
-		SELECT
-			member_pw as memberPw
-		FROM member
-		WHERE member_pw = PASSWORD(#{memberPw})
-	</select>
-	
-	
-	<!-- 회원정보수정 -->
-	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE 	member
-		SET member_name = #{memberName},
-			member_addr = #{memberAddr},
-			member_phone = #{memberPhone},
-			member_email = #{memberEmail},	
-			member_pw = PASSWORD(#{memberPw}),
-			member_pic= #{memberPic}  
-		WHERE  member_id = #{memberId}		
-	</update>
 
 	<!-- 회원탈퇴 -->
 	<delete id ="deleteMember" 	parameterType="com.gdu.cashbook.vo.LoginMember"	>

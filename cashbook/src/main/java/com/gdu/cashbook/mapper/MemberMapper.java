@@ -17,6 +17,8 @@ public interface MemberMapper {
 	public String selectMemberIdByMember(Member member); 
 	//수정하기 
 	public int updateMember(Member member); 
+	public int updateNoPicMember(Member member); //프로필 사진 안들어간경우
+	
 	//회원탈퇴(삭제) 
 	public int deleteMember(LoginMember loginMember);	
 	//회원(로그인한 나의 정보)보기 

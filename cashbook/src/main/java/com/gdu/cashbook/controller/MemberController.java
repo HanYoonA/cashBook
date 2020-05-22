@@ -92,6 +92,13 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "redirect:/";
 		}
 		
+		MultipartFile mf = memberForm.getMemberPic();
+		String originName= mf.getOriginalFilename(); // 파일형의 이름을 스트링형으로 바꿔주는 메소드	
+		
+		if(originName =="") {
+			
+		}
+		
 		memberService.modifyMember(memberForm);				
 		return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  		
 	}

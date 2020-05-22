@@ -63,6 +63,20 @@ public class MemberService {
 		return memberMapper.selectMemberIdByMember(member);
 	}
 	
+	//회원정보 수정 pic가 빈값일경우 
+	public int modifyNoPicMember(MemberForm memberForm) {
+		Member member = new Member();
+		member.setMemberId(memberForm.getMemberId());
+		member.setMemberPw(memberForm.getMemberPw());
+		member.setMemberAddr(memberForm.getMemberAddr());
+		member.setMemberEmail(memberForm.getMemberEmail());
+		member.setMemberName(memberForm.getMemberName());
+		member.setMemberPhone(memberForm.getMemberPhone());
+		int row2 =memberMapper.updateNoPicMember(member);
+
+		return row2;
+	}
+
 	//회원정보 수정(입력값 넣기)
 	public int modifyMember(MemberForm memberForm) {
 		MultipartFile mf = memberForm.getMemberPic();
