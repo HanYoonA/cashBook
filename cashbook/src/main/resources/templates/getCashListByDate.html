@@ -42,8 +42,8 @@
 				<h3 th:text="${day}"></h3>
 			
 				<div>			
-					<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
-					<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+					<a class="btn btn-primary"  th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
+					<a  class="btn btn-primary" th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
 				</div>
 				<table border="1">
 					<thead>
@@ -80,11 +80,10 @@
 				</table>
 				<div>(수입+지출)합계:<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span></div>
 				<div>
-					<button type="button">입력</button>
+					<a class="btn btn-primary" th:href="@{/addCash}">입력</a> 
 				</div>	
 			</div>
 		</div>
-	</div>
 </body>
 </html>
 

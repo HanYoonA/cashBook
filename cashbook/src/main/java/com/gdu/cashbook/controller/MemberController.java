@@ -91,16 +91,36 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		if(session.getAttribute("loginMember")== null){ 
 			return "redirect:/";
 		}
-		
+		System.out.println(memberForm + "<----memberForm 받아온값 확인");
 		MultipartFile mf = memberForm.getMemberPic();
 		String originName= mf.getOriginalFilename(); // 파일형의 이름을 스트링형으로 바꿔주는 메소드	
+		System.out.println(originName+"<----originName 디버깅 ");
+		System.out.println(memberForm.getMemberPic() + "<--(memberForm.getMemberPic()");
 		
-		if(originName =="") {
-			
+		//멤버폼에서 넘겨받은 프로필 사진이 빈값이 아니거나 originNameㅇ; 공백이 아닐경우! 
+		//"image/png" 파일로는 사용 가능하나 그게 아니라면 
+		if (memberForm.getMemberPic() != null && !originName.equals("")) {
+			if (!memberForm.getMemberPic().getContentType().equals("image/png")
+					&& !memberForm.getMemberPic().getContentType().equals("image/jpeg")
+					&& !memberForm.getMemberPic().getContentType().equals("image/gif")) {
+				return "redirect:/modifyMember?imgMsg=n";
+			}
 		}
 		
-		memberService.modifyMember(memberForm);				
-		return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  		
+		
+		
+		//받아온 사진이 없으면(프로필 사진 변경 x) 원래 저장된 사진 그대로 보여줌 
+		if(memberForm.getMemberPic().getOriginalFilename().equals("")) {
+			memberService.modifyNoPicMember(memberForm);
+			return "redirect:/memberInfo"; // memberInfo.html 페이지 보여중  
+		}	
+		
+		memberService.modifyMember(memberForm);	
+		System.out.println(memberForm + "업데이트 멤버!!");
+		
+		memberService.modifyMember(memberForm);	
+		return "redirect:/memberInfo";
+		
 	}
 			
 	
@@ -236,6 +256,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 			return "redirect:/";
 		}
 		System.out.println(memberForm+"<---MemberForm");
+		System.out.println(memberForm.getMemberPic() + "<---- memberForm.getMemberPic()");
 		if(memberForm.getMemberPic()!=null) {
 			//파일은  .png .jpg .gif만 업로드 가능 
 			if(!memberForm.getMemberPic().getContentType().equals("image/png") 

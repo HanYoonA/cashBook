@@ -63,7 +63,7 @@ public class MemberService {
 		return memberMapper.selectMemberIdByMember(member);
 	}
 	
-	//회원정보 수정 pic가 빈값일경우 
+	//회원정보 수정(프로필 사진 변경 안함,pic가 빈값일경우 ) 
 	public int modifyNoPicMember(MemberForm memberForm) {
 		Member member = new Member();
 		member.setMemberId(memberForm.getMemberId());
@@ -72,12 +72,13 @@ public class MemberService {
 		member.setMemberEmail(memberForm.getMemberEmail());
 		member.setMemberName(memberForm.getMemberName());
 		member.setMemberPhone(memberForm.getMemberPhone());
-		int row2 =memberMapper.updateNoPicMember(member);
+		int row =memberMapper.updateNoPicMember(member);
+		System.out.println(member+ "<---들어간 값 확인");
 
-		return row2;
+		return row;
 	}
 
-	//회원정보 수정(입력값 넣기)
+	//회원정보 수정(입력값 넣기, 프로필 사진 변경함)
 	public int modifyMember(MemberForm memberForm) {
 		MultipartFile mf = memberForm.getMemberPic();
 		//확장자 필요		

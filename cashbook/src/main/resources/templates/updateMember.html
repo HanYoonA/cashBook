@@ -59,13 +59,14 @@ $(document).ready(function() {
 		</div>
 		<div class="col-sm-10" >
 			<div align="center">
-				<h1> 하잉하잉, 수정폼일세</h1>
+				<h1> 회원정보 수정</h1>
 				<form id="idForm" method="post" action="/modifyMember" enctype="multipart/form-data">
 					<table border="1" >
 					<tr>
 						<td colspan="2">
 							사진: 								
 							<input  type="file" name="memberPic" id="pic" >
+							<span th:if="${#httpServletRequest.getParameter('imgMsg')!=null}"> .jpg, .png, .gif 파일만 첨부 가능 합니다</span>
 						</td>				
 					</tr>			
 					<tr>

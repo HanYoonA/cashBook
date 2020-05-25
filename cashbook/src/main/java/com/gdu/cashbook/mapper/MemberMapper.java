@@ -15,9 +15,10 @@ public interface MemberMapper {
 	public int updateMemberPw(Member member);
 	//아이디 찾기 
 	public String selectMemberIdByMember(Member member); 
-	//수정하기 
+	//수정하기 (프로필 사진 변경한경우)
 	public int updateMember(Member member); 
-	public int updateNoPicMember(Member member); //프로필 사진 안들어간경우
+	//수정하기 (프로필 사진 변경 안함) 
+	public int updateNoPicMember(Member member); 
 	
 	//회원탈퇴(삭제) 
 	public int deleteMember(LoginMember loginMember);	

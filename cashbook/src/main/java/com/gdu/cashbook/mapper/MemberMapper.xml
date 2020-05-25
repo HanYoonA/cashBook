@@ -12,7 +12,7 @@
 		WHERE member_id=#{memberId}	
 	</select>
 	
-	<!-- pic 빈값일때 회원정보 수정 -->
+	<!--  회원정보 수정(프로필 사진 변경 안함) -->
 	<update id="updateNoPicMember" parameterType="com.gdu.cashbook.vo.Member">
 		UPDATE member 
 		SET member_name = #{memberName},
@@ -23,7 +23,7 @@
 		WHERE member_id	=#{memberId}	
 	</update>
 	
-	<!-- 회원정보수정 -->
+	<!-- 회원정보수정 (프로필 사진 변경할 경우)-->
 	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
 		UPDATE 	member
 		SET member_name = #{memberName},
