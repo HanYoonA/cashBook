@@ -10,12 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook.mapper.CashMapper;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.Category;
 import com.gdu.cashbook.vo.DayAndPrice;
 
 @Service
 @Transactional
 public class CashService {
 	@Autowired private CashMapper cashMapper;
+	
+	//입력하기 
+	public int addCash(Cash Cash) {
+		int row = cashMapper.insertCash(Cash); 
+		return row;
+	}
+	
+	//카테고리 리스트 
+	public List<Category> selectCateogyList(){		
+		return cashMapper.selectCategoryList();	
+	}
 	
 	public List<DayAndPrice> getCashAndPriceList(String memberId, int year,  int month){
 		Map<String, Object> map = new HashMap<>();

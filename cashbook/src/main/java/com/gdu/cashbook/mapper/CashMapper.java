@@ -6,10 +6,16 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.Category;
 import com.gdu.cashbook.vo.DayAndPrice;
 
 @Mapper
 public interface CashMapper {
+	// 수입,지출 입력하기 
+	public int insertCash(Cash cash); 
+
+	public List<Category> selectCategoryList();
+	
 	public List<DayAndPrice> selectDayAndPriceList(Map<String, Object> map);
 	//로그인 사용자의 오늘날짜 Cash 목록      
 	public List<Cash> selectCashListByDate(Cash cash);	

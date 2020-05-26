@@ -12,10 +12,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook.service.CashService;
 import com.gdu.cashbook.vo.Cash;
+import com.gdu.cashbook.vo.Category;
 import com.gdu.cashbook.vo.DayAndPrice;
 import com.gdu.cashbook.vo.LoginMember;
 
@@ -23,6 +25,34 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired private CashService cashService;
 	
+	//cash 수입 지출 내용 추가 링크
+	@GetMapping("addCash")
+	public String addCash(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
+		//카테고리는 여러개라서  리스트에 담아 모델에 넣어 보내줌
+		List<Category>categoryList =cashService.selectCateogyList();
+		model.addAttribute("categoryList", categoryList);
+		return "addCash";		
+	}
+	
+	//cash 수입 지출 내용 추가 액션 
+	@PostMapping("addCash")
+	public String addCash(HttpSession session, Cash cash) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
+		//세션의 담긴 멤버아이디를 구하기 위해서 세션은 오브젝트 타입이기에 LoginMember 타입으로 형변화해줌 
+		//그리고나서  얻어온 memberId의 값을 스트링 변수에 담음-> 해당변수 값 cash에 넣기!  
+		String memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		cash.setMemberId(memberId);
+		System.out.println(cash +"<------캐쉬 추가하기~~~!!!!!!!"+session.getAttribute("loginMember"));
+		
+		cashService.addCash(cash);
+		
+		return "redirect:/getCashListByDate";	
+	}
 	
 	//달별로 
 	@GetMapping("getCashListByMonth")

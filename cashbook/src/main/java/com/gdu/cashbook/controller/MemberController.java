@@ -26,6 +26,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	//비번찾기 액션 
 	@PostMapping("/findMemberPw")
 	public String findMemberPw(HttpSession session, Model model, Member member) {
+		System.out.println(member);
 		int row= memberService.getMemberPw(member);
 		String msg = "아이디와 메일을  확인하세요";
 		if(row == 1) {
