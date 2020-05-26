@@ -81,7 +81,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		System.out.println("수정확인중"+member);
 		model.addAttribute("member", member);
 				
-		return "/updateMember";		
+		return "updateMember";		
 	}		
 	
 	

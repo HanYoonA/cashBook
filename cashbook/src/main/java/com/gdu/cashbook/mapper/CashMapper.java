@@ -11,9 +11,13 @@ import com.gdu.cashbook.vo.DayAndPrice;
 
 @Mapper
 public interface CashMapper {
-	// 수입,지출 입력하기 
+	//수정액션 
+	public int updateCashhOne(Cash cash);	
+	//수정폼 수정 클릭한 내용 가져오기(수정 폼에서 내용들 보여줌)
+	public Cash selectCashOne(int cashNo);	
+	// Cash 일자별 수입/지출 입력하기
 	public int insertCash(Cash cash); 
-
+	// addCash 폼에서  카테고리 내용들 보여질수 있도록 리스트에 담아서 보냄 
 	public List<Category> selectCategoryList();
 	
 	public List<DayAndPrice> selectDayAndPriceList(Map<String, Object> map);

@@ -74,13 +74,13 @@
 							<td th:text="${cash.cashPlace}"></td>
 							<td th:text="${cash.cashMemo}"></td>
 							<td><a th:href="@{/removeCash(cashNo=${cash.CashNo})}">삭제</a></td>
-							<td><a href="">수정</a></td>
+							<td><a th:href="@{/modifyCash(cashNo=${cash.CashNo})}">수정</a></td>
 						</tr>
 					</tbody>
 				</table>
 				<div>(수입+지출)합계:<span th:text="${#numbers.formatInteger(cashKindSum,0,'COMMA')}"></span></div>
 				<div>
-					<a class="btn btn-primary" th:href="@{/addCash}">입력</a> 
+					<a class="btn btn-primary" th:href="@{/addCash}">입력하기</a> 
 				</div>	
 			</div>
 		</div>

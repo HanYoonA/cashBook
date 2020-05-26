@@ -18,6 +18,17 @@ import com.gdu.cashbook.vo.DayAndPrice;
 public class CashService {
 	@Autowired private CashMapper cashMapper;
 	
+	//수정액션
+	public int modifyCashOne(Cash cash) {
+		int row = cashMapper.updateCashhOne(cash);
+		return row;		
+	}
+	
+	//수정폼 
+	public Cash selectCashOne(int cashNo) {		
+		return cashMapper.selectCashOne(cashNo);				
+	}
+	
 	//입력하기 
 	public int addCash(Cash Cash) {
 		int row = cashMapper.insertCash(Cash); 

@@ -25,7 +25,43 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired private CashService cashService;
 	
-	//cash 수입 지출 내용 추가 링크
+	//cash 수정폼 
+	@GetMapping("/modifyCash")
+	public String modifyCash(HttpSession session, Model model, @RequestParam(value="cashNo") int cashNo) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
+		System.out.println(cashNo +"<---수정폼 cashNo값 받아오는지 확인 ");
+		//수정할 cash_no에 해당하는 내용(1개) 가져오기
+		Cash cash =cashService.selectCashOne(cashNo);
+		System.out.println(cash+"<----cash!!");
+		model.addAttribute("cash",cash);
+		
+		List<Category>categoryList =cashService.selectCateogyList();
+		model.addAttribute("categoryList", categoryList);
+		
+		return "modifyCash"; //modifyCash.html 보여줌 		
+	}		
+	
+	
+	//cash 수정액션 
+	@PostMapping("/modifyCash")
+	public String modifyCash(HttpSession session,Cash cash) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
+		String memberId=((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		cash.setMemberId(memberId); // 로그인 아이디 가져와서 캐쉬vo에 담기 
+		System.out.println(cash + "< -----수정액션  cash받아온값 ");
+		
+		cashService.modifyCashOne(cash);
+		
+		return "redirect:/getCashListByDate";		
+	}
+	
+	
+	
+	//add Cash 폼( 카테고리,cash 수입 지출 내용 추가 링크)
 	@GetMapping("addCash")
 	public String addCash(HttpSession session, Model model) {
 		if(session.getAttribute("loginMember")==null) {
@@ -37,7 +73,7 @@ public class CashController {
 		return "addCash";		
 	}
 	
-	//cash 수입 지출 내용 추가 액션 
+	//add Cash액션(cash 수입 지출 내용 추가 액션 )
 	@PostMapping("addCash")
 	public String addCash(HttpSession session, Cash cash) {
 		if(session.getAttribute("loginMember")==null) {
@@ -46,7 +82,7 @@ public class CashController {
 		//세션의 담긴 멤버아이디를 구하기 위해서 세션은 오브젝트 타입이기에 LoginMember 타입으로 형변화해줌 
 		//그리고나서  얻어온 memberId의 값을 스트링 변수에 담음-> 해당변수 값 cash에 넣기!  
 		String memberId = ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
-		cash.setMemberId(memberId);
+		cash.setMemberId(memberId); // 로그인 아이디 가져와서 캐쉬vo에 담기  
 		System.out.println(cash +"<------캐쉬 추가하기~~~!!!!!!!"+session.getAttribute("loginMember"));
 		
 		cashService.addCash(cash);
