@@ -32,7 +32,8 @@ public class MemberService {
 	@Autowired private MemberMapper memberMapper;
 	@Autowired private MemberidMapper memberidMapper;
 	@Autowired private JavaMailSender javaMailSender;//@Conponent
-	@Value("C:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\")
+	@Value("C:\\Users\\gd\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590372851892\\cashbook\\src\\main\\resources\\static\\upload")
+	
 	private String path;
 	
 	public int getMemberPw(Member member) { //id&email
@@ -111,7 +112,6 @@ public class MemberService {
 				mf.transferTo(file);
 			} catch (Exception e) {			
 				e.printStackTrace();
-				throw new RuntimeException(); 
 			}		
 		         // Exception 
 		         //1.예외처리를 해야만 문법적으로 이상없는 예외 
@@ -183,6 +183,7 @@ public class MemberService {
 		
 		//새로운 이름을 생성: UUID
 		String memberPic= memberForm.getMemberId()+extension; 
+		
 		
 		//1.디비에서 저장 
 		// memberForm -> member

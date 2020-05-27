@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div class="contanier">
+		<div class="row">
+			<div class="col-sm-3">
+				<div id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-6" align="center">
+				<h1>문의글 작성</h1>
+				<form method="post" action="/addBoard">
+					<div>
+						문의 제목:
+						<input class="form-control" type="text" name="boardTitle">
+					</div>
+					<div>
+						문의 내용:
+						<input  class="form-control" type="text" name="boardContent">
+					</div>
+					<div><button  class="btn btn-primary" type="submit">문의 남기기 완료</button></div>
+				</form>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+</body>
+</html>

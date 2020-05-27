@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div class="contanier">
+		<div class="row">
+			<div class="col-sm-3">
+				<div id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-6" align="center">
+		
+				<h1>게시판 수정폼</h1>
+				<div>
+					<a style="float: left;" class="btn btn-primary" href="">이전</a> <a
+						style="float: right;" class="btn btn-primary" href="">다음</a>
+				</div>				
+				<form>
+					<div align="center">
+						<!-- 글제목 content title -->
+						<input class="form-control" type="text" th:value="${board.boardTitle}">
+					</div>
+					<br>
+					<div class="row">
+						<!-- 멤버 아이디, 게시글 작성 완료한 시간 -->
+						<div class="col-lg">
+							<input class="form-control" type="text" th:value="${board.memberId}"  readonly="readonly" >
+						</div>
+						<div class="col-lg">
+							<input class="form-control" type="text" th:value="${board.boardDate}"  readonly="readonly">
+						</div>
+					</div>
+					<br>
+					<div>
+						<textarea class="form-control" rows="20" cols="50" th:value="${board.boardContent}" 
+								  th:inline="text" >
+						[[*{board.boardContent}]]
+						</textarea>
+					</div>
+					<br>
+					<button class="btn btn-primary" type="submit">수정완료</button>
+				</form>				
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+</body>
+</html>

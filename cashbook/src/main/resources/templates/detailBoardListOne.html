@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div class="contanier">
+		<div class="row">
+			<div class="col-sm-3">
+				<div id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-6" align="center">
+				<h1>게시판 상세 보기</h1>
+				<div>
+					<a style="float: left;" class="btn btn-primary" href="">이전</a> 
+					<a	style="float: right;" class="btn btn-primary" href="">다음</a>
+				</div>
+				
+				<div align="center">
+					<!-- 글제목 content title -->
+					<input class="form-control" type="text" th:value="${board.boardTitle}" readonly="readonly">
+				</div>
+				<br>
+				<div class="row">
+					<!-- 멤버 아이디, 게시글 작성 완료한 시간 -->
+					<div class="col-lg">
+						<input class="form-control" type="text" th:value="${board.memberId}" readonly="readonly">
+					</div>
+					<div class="col-lg">
+						<input class="form-control" type="text" th:value="${board.boardDate}" readonly="readonly">
+					</div>
+				</div>
+				<br>
+				<div>
+					<textarea class="form-control" rows="20" cols="50"
+						th:value="${board.boardContent}" th:inline="text"
+						readonly="readonly">
+					[[*{board.boardContent}]]
+					</textarea>
+					<!--  <textarea th:inline="text" class="form-control" rows="3" readonly="readonly">[[*{board.boardContent}]]</textarea>	 -->
+				</div>
+				<br>
+				<div>
+					<a class="btn btn-primary" th:href="@{/boardList}">목록</a> 
+					<a class="btn btn-primary" th:href="@{/modifyBoard(boardNo=${board.boardNo})}">수정</a> 
+					<a class="btn btn-primary" th:href="@{/removeBoard(boardNo=${board.boardNo})}">삭제</a>
+				</div>
+				<br>				
+				<!-- 댓글 입력하기,입력할때  보드 넘버값 넘겨줌 -->
+				<form method="post" th:action="@{/addComment/(boardNo=${board.boardNo})}"> <!-- 보드 컨트롤러에 처리함 -->
+					<input  type="text" name="commentContent" placeholder="댓글을 입력하세요"> 				
+					<button type="submit" class="btn btn-primary">댓글입력</button>
+				</form>
+				<!-- 댓글 리스트보기 -->
+				<br>
+				<table class="table table-bordered"> 
+					<tr th:each="list : ${commentList}">						
+						<td th:text="${list.memberId}"></td>			
+						<td th:text="${list.commentContent}"></td>
+						<td><a href="">수정</a></td>
+						<td><a th:href="@{/removeComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">삭제</a></td>
+					</tr>					
+					<!-- <tr>
+						<td><a class="btn btn-primary" href="">이전</a></td>
+						<td><a class="btn btn-primary" href="">다음</a></td>
+					</tr>	 -->
+				</table>				
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+</body>
+</html>
