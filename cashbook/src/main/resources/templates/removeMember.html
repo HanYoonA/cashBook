@@ -18,20 +18,35 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
 </head>
 <body>
-  <h1>회원탈퇴</h1>
-  <div th:include="/include/menu::sidemenu"></div> 
-  	<form method="Post" action="/removeMember">
-		<div>
-			memberPw:
-			<input type="password" name="memberPw">		
-			<span th:text="${msg}"></span>	
+	<div class="contanier">
+		<div class="row">			
+			<div class="col-sm-4">
+				<div  id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-5" align="center">
+				<h1>회원탈퇴</h1>
+				<form method="Post" action="/removeMember">
+					<div>
+						memberPw: <input type="password" name="memberPw"> 
+						<span th:text="${msg}"></span>
+						<button type="submit" class="btn btn-primary">삭제하기</button>	
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-3"></div>
 		</div>
-		<div>
-			<button type="submit"> 삭제하기</button>
-		</div>
-	</form>
-	
+	</div>
 </body>
 </html>
