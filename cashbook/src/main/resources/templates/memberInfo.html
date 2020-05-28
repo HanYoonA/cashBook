@@ -32,16 +32,16 @@
 <body>
 	<div class="contanier">
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-4">
 				<div id="aside" th:include="/include/menu::sidemenu"></div>
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-5" align="center">
 				<div>
 					<h1>memberInfo</h1>
-					<a th:href="@{/removeMember}">회원탈퇴 </a> <a
-						th:href="@{/modifyMember}"> 회원수정</a>
+					<a style="float:right;" th:href="@{/removeMember}" class="btn btn-primary">회원탈퇴 </a> 
+					<a style="float:right;" th:href="@{/modifyMember}" class="btn btn-primary"> 회원수정</a>
 				</div>
-				<table border="1">
+				<table class="table table-bordered">
 					<tr>
 						<td th:text="${member.memberPic}">사진</td>
 						<td><img th:src="@{${'/upload/'+member.memberPic}}"
@@ -70,6 +70,7 @@
 					</tr>
 				</table>
 			</div>
+			<div class="col-sm-3"></div>
 		</div>
 	</div>
 </body>

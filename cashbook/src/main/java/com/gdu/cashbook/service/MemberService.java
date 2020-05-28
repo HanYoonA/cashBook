@@ -32,7 +32,7 @@ public class MemberService {
 	@Autowired private MemberMapper memberMapper;
 	@Autowired private MemberidMapper memberidMapper;
 	@Autowired private JavaMailSender javaMailSender;//@Conponent
-	@Value("C:\\Users\\gd\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590372851892\\cashbook\\src\\main\\resources\\static\\upload")
+	@Value("C:\\Users\\gd\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1590372851892\\cashbook\\src\\main\\resources\\static\\upload\\")
 	
 	private String path;
 	
