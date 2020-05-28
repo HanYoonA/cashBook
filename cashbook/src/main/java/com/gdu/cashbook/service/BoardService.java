@@ -15,6 +15,13 @@ import com.gdu.cashbook.vo.Board;
 public class BoardService {
 	@Autowired private BoardMapper boardMapper;
 	@Autowired private CommentMapper commetMapper;
+	
+	//게시글 수정 
+	public int modifyBoard(Board board) {
+		int row = boardMapper.updateBoard(board);
+		return row;		
+	}
+	
 	//게시글 1개 삭제
 	public void removeBoardAndCommentAll(int boardNo) {		
 		commetMapper.deleteCommentAll(boardNo); //댓글 전체삭제 

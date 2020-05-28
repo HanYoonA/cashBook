@@ -42,25 +42,27 @@
 					<a style="float: left;" class="btn btn-primary" href="">이전</a> <a
 						style="float: right;" class="btn btn-primary" href="">다음</a>
 				</div>				
-				<form>
+				<form method="post" action="/modifyBoard">
 					<div align="center">
 						<!-- 글제목 content title -->
-						<input class="form-control" type="text" th:value="${board.boardTitle}">
+						<input class="form-control" type="text" th:value="${board.boardTitle}" name="boardTitle">
+						<!--숨겨서 보드넘버 보내기! -->
+						<input type="hidden" th:value="${board.boardNo}" name="boardNo">
 					</div>
 					<br>
 					<div class="row">
 						<!-- 멤버 아이디, 게시글 작성 완료한 시간 -->
 						<div class="col-lg">
-							<input class="form-control" type="text" th:value="${board.memberId}"  readonly="readonly" >
+							<input class="form-control" type="text" th:value="${board.memberId}"  readonly="readonly" name="memberId" >
 						</div>
 						<div class="col-lg">
-							<input class="form-control" type="text" th:value="${board.boardDate}"  readonly="readonly">
+							<input class="form-control" type="text" th:value="${board.boardDate}"  readonly="readonly" name="boardDate">
 						</div>
 					</div>
 					<br>
 					<div>
 						<textarea class="form-control" rows="20" cols="50" th:value="${board.boardContent}" 
-								  th:inline="text" >
+								  th:inline="text"  name="boardContent">
 						[[*{board.boardContent}]]
 						</textarea>
 					</div>

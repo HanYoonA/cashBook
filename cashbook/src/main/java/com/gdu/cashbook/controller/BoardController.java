@@ -98,6 +98,7 @@ public class BoardController {
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/";
 		}
+		
 		//선택한 게시글의 해당하는 내용  보여주기위해 값을 담음
 		Board board =boardService.selectBoardListOne(boardNo);		
 		model.addAttribute("board",board);
@@ -105,6 +106,21 @@ public class BoardController {
 		return "modifyBoard";		
 	}
 	
+	//게시글 수정하기 
+	@PostMapping("modifyBoard")
+	public String modifyBoardOne(HttpSession session, Model model, Board board) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
+		//session로그인값 스트링으로 바꿔서 memberId에 넣기
+		String memberId= ((LoginMember)(session.getAttribute("loginMember"))).getMemberId();
+		board.setMemberId(memberId);
+		
+		System.out.println(board +"<--게시판 수정할 내용 받아오나");
+	    boardService.modifyBoard(board);
+		
+		return "redirect:/boardList";
+	}
 	
 	//게시판 전체리스트 폼(게시판 리스트 전체 목록내용 담아서 보내줌)
 	@GetMapping("boardList")
@@ -118,6 +134,7 @@ public class BoardController {
 		
 		return "boardList";	
 	}
+	
 	
 	//게시글 (1개)상세보기  
 	@GetMapping("detailBoardListOne")

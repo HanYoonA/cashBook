@@ -8,6 +8,9 @@ import com.gdu.cashbook.vo.Board;
 
 @Mapper
 public interface BoardMapper {
+	//게시글 수정 
+	public int updateBoard(Board board);
+	
 	//게시글 삭제 
 	public void deleteBoard(int boardNo);
 	//게시글  추가하기
