@@ -20,31 +20,43 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div  class="row">
-	<!-- fregment1 --> <!-- /include/menu::sidemenu로 해당 디브 불러낼 수 있음--> 
-	<div class="col-sm-4" th:fragment="sidemenu"> 
-		<div><span th:text="${session.loginMember.memberId}"></span>님</div>
-		<ul>
-			<li><a th:href="@{/home}">홈</a></li>	
-			<li><a th:href="@{/memberInfo}">회원정보</a></li>	
-			<li><a th:href="@{/getCashListByDate}">일별가계부관리</a></li>
-			<li><a th:href="@{/getCashListByMonth}">월별가계부관리</a></li>
-			<li><a th:href="@{/boardList}">게시판</a></li>			
-			<li><a th:href="@{/logout}">로그아웃</a></li>
-		</ul>		
+	<div class="row">
+		<!-- fregment1 -->
+		<!-- /include/menu::sidemenu로 해당 디브 불러낼 수 있음-->
+		<div class="col-sm-4" th:fragment="sidemenu">
+			<!-- 일반회원 레벨 0인 경우 보여줄 목록 -->
+			<div th:if="${session.loginMember.memberLevel<1}">
+				<span th:text="${session.loginMember.memberId}"></span>님
+				<ul>
+					<li><a th:href="@{/home}">홈</a></li>
+					<li><a th:href="@{/memberInfo}">회원정보</a></li>
+					<li><a th:href="@{/getCashListByDate}">일별가계부관리</a></li>
+					<li><a th:href="@{/getCashListByMonth}">월별가계부관리</a></li>
+					<li><a th:href="@{/boardList}">게시판</a></li>
+					<li><a th:href="@{/logout}">로그아웃</a></li>
+				</ul>
+			</div>
+			<!-- 관리자(admin) 레벨 9이상인 경우 보여줄 목록-->
+			<div th:if="${session.loginMember.memberLevel>9}">
+				<span th:text="${session.loginMember.memberId}"></span>관리자님
+				<ul>
+					<li><a th:href="@{/adminPage}">관리자 페이지</a></li>
+					<li><a th:href="@{/home}">홈</a></li>
+					<li><a th:href="@{/boardList}">게시판</a></li>
+					<li><a th:href="@{/logout}">로그아웃</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-8"></div>
 	</div>
-	<div  class="col-sm-8" > </div>
-</div>	
-
 	<!-- fregment2 -->
 
-	
+
 	<!-- fregment3 -->
 
 	<!-- fregment1 -->
-	
-	
-	<!-- fregment1 -->	
 
+
+	<!-- fregment1 -->
 </body>
 </html>

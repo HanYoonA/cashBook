@@ -18,29 +18,34 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
 </head>
-<style >  
- #aside {
-     width: 200px;
-     height: 3000px;
-     position: fixed;
-     background: #5BA8D8;
-     overflow: hidden;
-     float: left;
- }
-</style>	
 <body>
-<div class="row">
-	<div class="col-sm-2"> 
-		<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  --> 
-		<div id="aside" th:include="/include/menu::sidemenu"></div> <!--<jsp:include page=""> -->
-	</div>
-	<div  class="col-sm-10" align="center" >	
-		<h1>가계부 home에 오신걸 환영합니다!</H1>
-		<div th:if="${session.loginMember.memberLevel>9}">
-			<h2> 관리자 모드 입니다 : ) </h2>
+	<div class="contanier">
+		<div class="row">
+			<div class="col-sm-3">
+				<div id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-6" align="center">
+				<h1 align="center">댓글 수정하기</h1>
+				<form method="post" action="">
+					<div>
+						<input type="text" value="" name="">
+					</div>
+					<button type="submit">댓글 수정하기</button>
+				</form>
+			</div>
+			<div class="col-sm-3"></div>
 		</div>
-	</div>	
-</div>	
+	</div>
 </body>
 </html>

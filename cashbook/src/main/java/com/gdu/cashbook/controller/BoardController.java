@@ -23,8 +23,28 @@ public class BoardController {
 	@Autowired private BoardService boardService;
 	@Autowired private CommentService commentService;
 	
-	//포스트 삭제하기 (댓글 전체 삭제후 포스트 삭제해야됨) 
-	@GetMapping("/removeBoard")
+	// 댓글 수정하기
+	@GetMapping("modifyComment")
+	public String modifyComment(HttpSession session, Model model,
+				@RequestParam("boardNo") int boardNo,
+				@RequestParam("commentNo") int commentNo) {
+		// 디버깅
+		System.out.println(boardNo + "<--수정할값 받아오나 ");
+		System.out.println(commentNo + "<-- 수정할 댓글 넘버 가져오나");
+
+		// 수정할 댓글 내용가져오기
+		
+		
+		
+		
+		// 폼으로 보내주기
+
+		return "modifyComment"; //modifyComment html보여주기 
+	}
+	
+	
+	//게시글 삭제하기 (댓글 전체 삭제후 포스트 삭제해야됨) 
+	@GetMapping("removeBoard")
 	public String removeComment(HttpSession session,  @RequestParam("boardNo")int boardNo) {
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/";
@@ -35,7 +55,7 @@ public class BoardController {
 	}
 	
 	//댓글 삭제하기 
-	@GetMapping("/removeComment")
+	@GetMapping("removeComment")
 	public String removeComment(HttpSession session,  @RequestParam("boardNo")int boardNo,@RequestParam("commentNo")int commentNo) {
 		if(session.getAttribute("loginMember")==null) {
 			return "redirect:/";
@@ -136,7 +156,7 @@ public class BoardController {
 	}
 	
 	
-	//게시글 (1개)상세보기  
+	//게시글 (1개)상세보기 및 관련된 댓글리스트 보여주기  
 	@GetMapping("detailBoardListOne")
 	public String selectBoardListOne(HttpSession session,  Model model, @RequestParam(value="boardNo") int boardNo ) {
 		if(session.getAttribute("loginMember")==null) {

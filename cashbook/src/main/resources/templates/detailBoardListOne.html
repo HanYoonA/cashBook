@@ -68,8 +68,11 @@
 				<br>
 				<div>
 					<a class="btn btn-primary" th:href="@{/boardList}">목록</a> 
-					<a class="btn btn-primary" th:href="@{/modifyBoard(boardNo=${board.boardNo})}">수정</a> 
-					<a class="btn btn-primary" th:href="@{/removeBoard(boardNo=${board.boardNo})}">삭제</a>
+					<!-- 게시판 글을 쓴 아이디와 접속한 아이디가 같은경우 또는 관리자 레벨인 경우 수정삭제 보이게함 -->
+					<span  th:if="${session.loginMember.memberId == board.memberId OR session.loginMember.memberLevel >=10}">
+						<a class="btn btn-primary" th:href="@{/modifyBoard(boardNo=${board.boardNo})}">수정</a> 
+						<a class="btn btn-primary" th:href="@{/removeBoard(boardNo=${board.boardNo})}">삭제</a>
+					</span>
 				</div>
 				<br>				
 				<!-- 댓글 입력하기,입력할때  보드 넘버값 넘겨줌 -->
@@ -79,12 +82,15 @@
 				</form>
 				<!-- 댓글 리스트보기 -->
 				<br>
-				<table class="table table-bordered"> 
+				<table class="table"> 
 					<tr th:each="list : ${commentList}">						
 						<td th:text="${list.memberId}"></td>			
 						<td th:text="${list.commentContent}"></td>
-						<td><a href="">수정</a></td>
-						<td><a th:href="@{/removeComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">삭제</a></td>
+						<!-- 댓글쓴 작성자와 로그인한 멤버 아이디 값이 같으면  수정 삭제 보여줌, 관리자도 보여줌 -->						
+						<td th:if="${session.loginMember.memberId == list.memberId||session.loginMember.memberLevel >9}">
+							<a th:href="@{/modifyComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">수정</a>						
+							<a th:href="@{/removeComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">삭제</a>
+						</td>						
 					</tr>					
 					<!-- <tr>
 						<td><a class="btn btn-primary" href="">이전</a></td>
