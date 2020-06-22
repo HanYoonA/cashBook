@@ -8,13 +8,13 @@
 			parameterType="String"
 			resultType="String">
 		SELECT member_pic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id=#{memberId}	
 	</select>
 	
 	<!--  회원정보 수정(프로필 사진 변경 안함) -->
 	<update id="updateNoPicMember" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member 
+		UPDATE cashbook_member
 		SET member_name = #{memberName},
 			member_addr = #{memberAddr},
 			member_phone = #{memberPhone},
@@ -25,7 +25,7 @@
 	
 	<!-- 회원정보수정 (프로필 사진 변경할 경우)-->
 	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE 	member
+		UPDATE 	cashbook_member
 		SET member_name = #{memberName},
 			member_addr = #{memberAddr},
 			member_phone = #{memberPhone},
@@ -42,7 +42,7 @@
 	 -->
 	<update id="updateMemberPw"
 			parameterType="com.gdu.cashbook.vo.Member">
-		UPDATE member 
+		UPDATE cashbook_member
 		SET	member_pw = PASSWORD(#{memberPw})
 		WHERE member_id = #{memberId}
 		AND member_email = #{memberEmail}
@@ -54,7 +54,7 @@
 	    	resultType="String">
 		SELECT 
 			CONCAT(SUBSTRING(member_id,1,3),'****')
-		FROM member 
+		FROM cashbook_member
 		WHERE member_name= #{memberName}
 		AND member_phone = #{memberPhone}
 		AND member_email= #{memberEmail} 
@@ -65,7 +65,7 @@
 
 	<!-- 회원탈퇴 -->
 	<delete id ="deleteMember" 	parameterType="com.gdu.cashbook.vo.LoginMember"	>
-		DELETE FROM member
+		DELETE FROM cashbook_member
 		WHERE member_id =#{memberId}
 		AND member_pw= PASSWORD(#{memberPw})	
 	</delete>
@@ -81,7 +81,7 @@
 			member_phone as memberPhone,
 			member_email as memberEmail,
 			member_pic as memberPic
-		FROM member
+		FROM cashbook_member
 		WHERE member_id =#{memberId}	 
 	
 	</select>
@@ -94,9 +94,9 @@
 		SELECT 
 			member_id <!-- 아디값 있으면  못씀 -->
 		FROM (
-		 SELECT member_id FROM member <!-- 회원가입된 아이디랑, 삭제시 디비에 남는아디니는 중복체크할때 막혀야됨 -->
+		 SELECT member_id FROM cashbook_member <!-- 회원가입된 아이디랑, 삭제시 디비에 남는아디니는 중복체크할때 막혀야됨 -->
 		 UNION
-		 SELECT member_id FROM memberid	<!--  -->
+		 SELECT member_id FROM cashbook_memberid	<!--  -->
 		)t
 		WHERE member_id = #{memberIdCheck}		
 	</select>
@@ -109,14 +109,14 @@
 			member_id as memberId,
 			member_pw as memberPw,
 			member_level as memberLevel
-		FROM member
+		FROM cashbook_member
 		WHERE member_id = #{memberId}
 		AND member_pw=PASSWORD(#{memberPw}) 	
 	</select>
 
 	<!-- 회원가입, 정보 입력하기 -->
 	<insert id="insertMember" parameterType="com.gdu.cashbook.vo.Member">
-		INSERT INTO member(
+		INSERT INTO cashbook_member(
 			member_id,
 			member_pw,
 			member_name,

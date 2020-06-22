@@ -42,7 +42,7 @@
 					<a style="float: left;" class="btn btn-primary" href="">이전</a> <a
 						style="float: right;" class="btn btn-primary" href="">다음</a>
 				</div>				
-				<form method="post" action="/modifyBoard">
+				<form method="post" th:action="@{/modifyBoard}">
 					<div align="center">
 						<!-- 글제목 content title -->
 						<input class="form-control" type="text" th:value="${board.boardTitle}" name="boardTitle">

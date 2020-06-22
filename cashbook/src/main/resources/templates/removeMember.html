@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-sm-5" align="center">
 				<h1>회원탈퇴</h1>
-				<form method="Post" action="/removeMember">
+				<form method="Post" th:action="@{/removeMember}">
 					<div>
 						memberPw: <input type="password" name="memberPw"> 
 						<span th:text="${msg}"></span>

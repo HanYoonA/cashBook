@@ -60,7 +60,7 @@ $(document).ready(function() {
 		<div class="col-sm-5" >
 			<div align="center">
 				<h1> 회원정보 수정</h1>
-				<form id="idForm" method="post" action="/modifyMember" enctype="multipart/form-data">
+				<form id="idForm" method="post" th:action="@{/modifyMember}" enctype="multipart/form-data">
 					<table class="table table-bordered">
 					<tr>
 						<td colspan="2">

@@ -19,28 +19,49 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<style >  
- #aside {
-     width: 200px;
-     height: 3000px;
-     position: fixed;
-     background: #5BA8D8;
-     overflow: hidden;
-     float: left;
- }
-</style>	
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
 <body>
-<div class="row">
-	<div class="col-sm-2"> 
-		<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  --> 
-		<div id="aside" th:include="/include/menu::sidemenu"></div> <!--<jsp:include page=""> -->
-	</div>
-	<div  class="col-sm-10" align="center" >	
-		<h1>가계부 home에 오신걸 환영합니다!</H1>
-		<div th:if="${session.loginMember.memberLevel>9}">
-			<h2> 관리자 모드 입니다 : ) </h2>
+	<div class="row">
+		<div class="col-sm-2">
+			<!-- /include폴더안에 있는 menu 파일 중에  th:fragment="sidemenu"인 div단위 내용 가져옴  -->
+			<div id="aside" th:include="/include/menu::sidemenu"></div>
+			<!--<jsp:include page=""> -->
 		</div>
-	</div>	
-</div>	
+		<div class="col-sm-10" align="center">
+			<h1>가계부 home에 오신걸 환영합니다!</H1>
+			<div th:if="${session.loginMember.memberLevel>9}">
+				<h2>관리자 모드 입니다 : )</h2>
+			</div>
+			<div align="left">
+				<h3>유저</h3>
+
+				<span class="font-weight-bold">1.회원가입- 아이디 및 개인정보 입력 후 회원가입</span>
+				<br> -아이디 중복 될 경우 회원가입불가 <br> -비밀번호 4글자 이상 및 일치시 회원가입 가능<br>
+				-프로필사진 추가 후 회원가입가능함 <br> <br> <span
+					class="font-weight-bold">2.회원정보(프로필 및 상세정보 수정가능)</span><br>
+				-사용자 이름, 주소, 전화번호, 이메일 변경 가능<br> -현재 비밀번호 재확인해야 수정완료할 수 있음 <br>
+
+				<br> <span class="font-weight-bold">3.일별가계부관리-일별에 해당하는
+					내역들 리스트로 보여줌</span><br> -일별로 기입한 내역들 볼 수 있음 <br> -일별로 기입한 내용 추가,
+				수정, 삭제 가능<br> <br> <span class="font-weight-bold">4.월별
+					관리부</span><br> -월에 해당하는 금액 수입-지출 계산이 되어 보여짐<br> <br> <span
+					class="font-weight-bold">5.게시판 </span><br> -사용자가 문의할 내용 올릴 수
+				있음<br> -답변은 누구나 올릴 수 있으며, 자신도 댓글 작성 가능함 <br> -사용자 본인의
+				게시판글만 수정 삭제할 수 있음 <br> -사용자 본인의 게시글댓글만 수정 삭제할 수 있음<br> <br>
+				<h3>관리자</h3>
+				-사용자의 게시글 리스트 (작업예정) <br> -사용자의 게시글 수정 및 삭제 가능 <br> -사용자의
+				게시글에 댓글 답변 가능 <br> -관리자 아이디 user1 비번 1234 <br>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

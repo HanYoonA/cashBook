@@ -5,17 +5,17 @@
 <mapper namespace="com.gdu.cashbook.mapper.CommentMapper">
 	<!-- 댓글 전체 삭제 -->
 	<delete id="deleteCommentAll" parameterType="int" >
-		DELETE FROM comment
+		DELETE FROM cashbook_comment
 		WHERE board_no= #{boardNo}	
 	</delete>	
 	<!-- 댓글삭제 -->
 	<delete id="deleteComment" parameterType="int" >
-		DELETE FROM comment
+		DELETE FROM cashbook_comment
 		WHERE comment_no = #{commentNo}	
 	</delete>	
 	<!-- 댓글 추가하기 -->
 	<insert id="insertComment" parameterType="com.gdu.cashbook.vo.Comment">
-		INSERT into comment(
+		INSERT into cashbook_comment(
 			board_no,
 			member_id,
 			comment_content,
@@ -36,7 +36,7 @@
 			member_id as memberId,
 			comment_content as commentContent,
 			comment_date as commentDate
-		FROM comment
+		FROM cashbook_comment
 		WHERE board_no= #{boardNo}	
 	</select>
 </mapper>

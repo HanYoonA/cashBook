@@ -5,7 +5,7 @@
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
 	<!--수정액션(Cash) -->
 	<update id="updateCashhOne" parameterType="com.gdu.cashbook.vo.Cash" >
-		 UPDATE cash 
+		 UPDATE cashbook_cash 
 		 SET cash_date = #{cashDate},
 			 cash_kind = #{cashKind},
 			 category_name = #{categoryName},
@@ -26,13 +26,13 @@
 			cash_memo as cashMemo,
 			cash_date as cashDate,
 			member_id as memberId	  	
-	  	FROM cash
+	  	FROM cashbook_cash
 	  	WHERE cash_no= #{cashNo}
 	</select>
 	
 	<!-- Cash add 일자별 수입/지출 입력하기  -->
 	<insert id="insertCash" parameterType="com.gdu.cashbook.vo.Cash">
-		INSERT into cash(
+		INSERT into cashbook_cash(
 			cash_no,
 			member_id,
 			cash_date,
@@ -56,7 +56,7 @@
 	<select id="selectCategoryList" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT 
 			category_name as categoryName
-		FROM category
+		FROM cashbook_category
 	</select>
 
 	<select id="selectDayAndPriceList"
@@ -65,7 +65,7 @@
 		SELECT DAY(cash_date) as day, 
 			   SUM(CASE WHEN cash_kind='수입' THEN cash_price
 			   		WHEN cash_kind='지출' THEN -cash_price END) as price
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id = #{memberId} 
 		AND YEAR(cash_date) = #{year}
 		AND MONTH(cash_date) = #{month}
@@ -74,7 +74,7 @@
 
 	<!--삭제 -->
 	<delete id="delectCash" parameterType="com.gdu.cashbook.vo.Cash"  >
-		DELETE FROM cash
+		DELETE FROM cashbook_cash
 		WHERE cash_no= #{cashNo}	
 	</delete>
 	
@@ -91,12 +91,12 @@
 	  SELECT
          (SELECT 
             IFNULL(SUM(cash_price), 0)   <!-- IFNULL은 해당 필드의 값이 NULL을 반환할때 다른 값으로 출력할 수 있도록 하는 함수이다.  -->
-         FROM cash
+         FROM cashbook_cash
          WHERE member_id = #{memberId} AND cash_kind = '수입' AND cash_date = #{cashDate})
          -
          (SELECT 
             IFNULL(SUM(cash_price), 0)
-         FROM cash
+         FROM cashbook_cash
          WHERE member_id = #{memberId} AND cash_kind = '지출' AND cash_date = #{cashDate})
       FROM dual; 
 	</select>
@@ -112,7 +112,7 @@
 			cash_price as cashPrice,
 			cash_place as cashPlace,
 			cash_memo as cashMemo
-		FROM  cash 
+		FROM  cashbook_cash 
 		WHERE member_id = #{memberId}
 		AND cash_date = #{cashDate}				
 		ORDER BY cash_no ASC

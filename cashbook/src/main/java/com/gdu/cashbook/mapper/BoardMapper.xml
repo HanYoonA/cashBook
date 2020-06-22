@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
 	<update id="updateBoard" parameterType="com.gdu.cashbook.vo.Board">
-		UPDATE board 
+		UPDATE cashbook_board
 		SET board_title =  #{boardTitle},
 			board_content = #{boardContent},
 			board_date = now()	
@@ -13,13 +13,13 @@
 	</update>
 
 	<delete id="deleteBoard"  parameterType="int">
-		DELETE FROM board 
+		DELETE FROM cashbook_board
 		WHERE board_no=  #{boardNo}	
 	</delete>
 	
 	
 	<insert id="insertBoard" parameterType="com.gdu.cashbook.vo.Board">
-		INSERT into board(
+		INSERT into cashbook_board(
 			member_id,
 			board_title,
 			board_content,
@@ -41,7 +41,7 @@
 			board_title as boardTitle,
 			board_content as boardContent,  
 			board_date as boardDate
-		FROM board 
+		FROM cashbook_board 
 		WHERE board_no= #{boardNo}		
 	</select>
 	<!-- 게시판 리스트 전체 목록 가져오기 -->
@@ -52,6 +52,6 @@
 			board_title as boardTitle,
 			board_content as boardContent,  
 			board_date as boardDate
-		FROM board 
+		FROM cashbook_board 
 	</select>
 </mapper>

@@ -87,7 +87,7 @@
 						<td th:text="${list.memberId}"></td>			
 						<td th:text="${list.commentContent}"></td>
 						<!-- 댓글쓴 작성자와 로그인한 멤버 아이디 값이 같으면  수정 삭제 보여줌, 관리자도 보여줌 -->						
-						<td th:if="${session.loginMember.memberId == list.memberId||session.loginMember.memberLevel >9}">
+						<td th:if="${session.loginMember.memberId == list.memberId || session.loginMember.memberLevel >9}">
 							<a th:href="@{/modifyComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">수정</a>						
 							<a th:href="@{/removeComment(boardNo=${board.boardNo},commentNo=${list.commentNo})}">삭제</a>
 						</td>						
