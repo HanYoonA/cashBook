@@ -58,7 +58,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	//아이디 찾기 액션 
 	@PostMapping("/findMemberId")	
 	public String findMemberId(HttpSession session,Model model ,Member member) {
-		//로그인 상태 아니면 홈
+		//로그인 상태면
 		if(session.getAttribute("loginMember")!= null){ 
 			return "redirect:/";
 		}			
@@ -106,9 +106,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 					&& !memberForm.getMemberPic().getContentType().equals("image/gif")) {
 				return "redirect:/modifyMember?imgMsg=n";
 			}
-		}
-		
-		
+		}				
 		
 		//받아온 사진이 없으면(프로필 사진 변경 x) 원래 저장된 사진 그대로 보여줌 
 		if(memberForm.getMemberPic().getOriginalFilename().equals("")) {
@@ -119,7 +117,6 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 		memberService.modifyMember(memberForm);	
 		System.out.println(memberForm + "업데이트 멤버!!");
 		
-		memberService.modifyMember(memberForm);	
 		return "redirect:/memberInfo";
 		
 	}
@@ -134,7 +131,7 @@ public class MemberController {//http 서블릿을 사용할수있는 객체가 
 	      return "removeMember";//input type="password"
 	}
 	
-	
+	//회원탈퇴 
 	@PostMapping("/removeMember")
 	public String removeMember(HttpSession session, @RequestParam("memberPw")String memberPw, Model model) {
 		if(session.getAttribute("loginMember")== null){ //로그인 상태 아니면 인덱스로

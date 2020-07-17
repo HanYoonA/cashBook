@@ -84,7 +84,7 @@ $(document).ready(function() {
 		<form id="idForm" method="post" th:action="@{/checkMemberId}" enctype="application/x-www-form-urlencoded"><!--  주소창 처럼 넘기겠다 그럼 글씨만 넘어가게됨 --> 
 			<div>
 				아이디 중복확인 : <input type="text" name="memberIdCheck" id="memberIdCheck" >
-				<button id="idBtn" type="button" >중복체크 </button>
+				<!-- <button id="idBtn" type="button" >중복체크 </button> -->
 				<span id="memberIdCheckHelper"></span>
 				<span th:text="${msg}"> </span>	
 			</div>
