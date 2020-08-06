@@ -1,5 +1,7 @@
 package com.gdu.cashbook.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.cashbook.vo.LoginMember;
@@ -7,6 +9,8 @@ import com.gdu.cashbook.vo.Member;
 
 @Mapper //@Mapper의 기능 + @Component(객체)의 기능 둘다함
 public interface MemberMapper {
+	//회원 리스트 
+	public List<Member> selectMemberList(); 
 	
 	//아이디를 넣어주면 멤버 이미지를 리턴 
 	public String selectMemberPic(String memberId); 

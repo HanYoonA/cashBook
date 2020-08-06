@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: #5BA8D8;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div class="contanier">
+		<div class="row">
+			<div class="col-sm-4">
+				<div id="aside" th:include="/include/menu::sidemenu"></div>
+			</div>
+			<div class="col-sm-5" align="center"> 
+				<h1>회원관리</h1>
+				 <table class="table table-bordered">
+				 	<tr>
+				 		<td>회원아이디</td>
+				 		<td>정보보기</td>
+				 	</tr>
+				 	<tr th:each="list : ${memberList}">
+				 		<td th:text="${list.memberId}"></td>
+				 		<td><a th:href="@{/detailMemberListOne(memberId=${list.memberId})}">상세보기</a></td>
+				 	</tr>				 
+				 </table>			
+			</div>	
+			<div class="col-sm-3"></div> 		
+		</div>	
+	</div>
+</body>
+</html>

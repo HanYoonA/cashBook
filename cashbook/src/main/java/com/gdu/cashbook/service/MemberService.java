@@ -36,6 +36,7 @@ public class MemberService {
 	
 	private String path;
 	
+
 	public int getMemberPw(Member member) { //id&email
 		//pw추가 
 		UUID uuid = UUID.randomUUID();

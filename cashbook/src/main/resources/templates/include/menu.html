@@ -40,8 +40,8 @@
 			<div th:if="${session.loginMember.memberLevel>9}">
 				<span th:text="${session.loginMember.memberId}"></span>관리자님
 				<ul>
-					<li><a th:href="@{/adminPage}">관리자 페이지</a></li>
 					<li><a th:href="@{/home}">홈</a></li>
+					<li><a th:href="@{/memberManagement}">회원 관리</a></li>
 					<li><a th:href="@{/boardList}">게시판</a></li>
 					<li><a th:href="@{/logout}">로그아웃</a></li>
 				</ul>
