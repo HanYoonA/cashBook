@@ -9,8 +9,14 @@ import com.gdu.cashbook.vo.Member;
 
 @Mapper //@Mapper의 기능 + @Component(객체)의 기능 둘다함
 public interface MemberMapper {
+	//회원 총 명수 구하기 
+	public int getTotalMember();
+	
+	//회원 상세보기
+	public Member selectMember(String memberId);
+	
 	//회원 리스트 
-	public List<Member> selectMemberList(); 
+	public List<Member> selectMemberList(int beginRow, int rowPerPage); 
 	
 	//아이디를 넣어주면 멤버 이미지를 리턴 
 	public String selectMemberPic(String memberId); 

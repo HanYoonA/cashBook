@@ -3,17 +3,36 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
-	<!--회원리스트  -->
-	<select id="selectMemberList" resultType="com.gdu.cashbook.vo.Member" >
+	<!-- 회원 총 명수 구하기 -->
+	<select  id="getTotalMember" resultType="int">
+		 SELECT COUNT(*)
+		 FROM cashbook_member
+	</select>
+	
+	<!--회원상세보기  -->
+	<select id="selectMember" resultType="com.gdu.cashbook.vo.Member" parameterType="String" >
 	SELECT 
 		member_id as memberId, 
-		member_pw as memberPw,
 		member_name as memberName,
 		member_addr as memberAddr,
 		member_phone as memberPhone,
 		member_email as memberEmail,
 		member_pic as memberPic	
 	FROM cashbook_member 
+	WHERE member_id =#{memberId}
+	</select>
+	
+	<!--회원리스트  -->
+	<select id="selectMemberList" resultType="com.gdu.cashbook.vo.Member" parameterType="Integer">
+	SELECT 
+		member_id as memberId, 
+		member_name as memberName,
+		member_addr as memberAddr,
+		member_phone as memberPhone,
+		member_email as memberEmail,
+		member_pic as memberPic	
+	FROM cashbook_member
+	LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 디버깅,주석, 커밋 메세지  -->

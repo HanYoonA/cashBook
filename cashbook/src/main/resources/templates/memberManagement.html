@@ -40,13 +40,26 @@
 				 <table class="table table-bordered">
 				 	<tr>
 				 		<td>회원아이디</td>
+				 		<td>회원이름</td>
 				 		<td>정보보기</td>
 				 	</tr>
-				 	<tr th:each="list : ${memberList}">
+				 	<tr th:each="list : ${list}">
 				 		<td th:text="${list.memberId}"></td>
-				 		<td><a th:href="@{/detailMemberListOne(memberId=${list.memberId})}">상세보기</a></td>
+				 		<td th:text="${list.memberName}"></td>
+				 		<td><a th:href="@{/memberManagementOne(memberId=${list.memberId})}">상세보기</a></td>
 				 	</tr>				 
-				 </table>			
+				 </table>
+				<!-- 처음 페이지 -->
+				<a th:href="@{/memberManagement(currentPage=1)}" style="float: left;" class="btn btn-primary">처음페이지</a>
+				
+				<!-- 이전 페이지 -->
+				<a th:if="${currentPage>1}" th:href="@{/memberManagement(currentPage=${currentPage-1})}" style="float: left;" class="btn btn-primary">이전</a>
+
+				<!-- 마지막 페이지 -->
+				<a th:href="@{/memberManagement(currentPage=${lastPage})}"  style="float: right;" class="btn btn-primary">마지막페이지</a>	 
+				
+				<!-- 다음 페이지 -->
+				<a th:if="${currentPage<lastPage}" th:href="@{/memberManagement(currentPage=${currentPage+1})}" style="float: right;" class="btn btn-primary">다음</a>							
 			</div>	
 			<div class="col-sm-3"></div> 		
 		</div>	
